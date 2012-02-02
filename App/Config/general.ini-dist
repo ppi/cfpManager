@@ -1,0 +1,16 @@
+[development]
+
+auth.salt = "jDbU&er*az"
+
+system.base_url = http://localhost/cfp-ppi/
+
+talk.levels[] = beginner
+talk.levels[] = intermediate
+talk.levels[] = advanced
+
+talk.duration[] = "30 minutes"
+talk.duration[] = "45 minutes"
+talk.duration[] = "60 minutes"
+
+layout.view_theme = default
+layout.renderer = php
