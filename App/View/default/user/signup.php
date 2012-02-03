@@ -1,7 +1,7 @@
 <div class="span10" id="user-signup-page">
 	<h1>Create an Account</h1>
-	<div class="alert-message block-message info">Please complete the form below to create your account</div>
-	<form id="user-form" method="post" action="" class="form-stacked">
+	<div class="alert alert-info">Please complete the form below to create your account</div>
+	<form id="user-form" method="post" action="" class="form-stacked well">
 		<fieldset>
 			<legend><img src="<?=$baseUrl;?>images/user/user.png" /> Personal Details</legend>
 			<div class="clearfix">
@@ -47,10 +47,10 @@
 				</div>
 			</div>
 		</fieldset>
-			
-		<div class="actions">
-			<input class="btn primary" type="submit" value="Register">
-		</div>
+		
+		<hr>
+		
+		<input class="btn btn-primary" type="submit" value="Register">
 	
 	</form>
 		

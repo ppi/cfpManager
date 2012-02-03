@@ -1,8 +1,7 @@
 <div class="span10" id="user-signup-page">
 
-	<h1>Login To Your Account</h1>
-	<form id="user-form" method="post" action="" class="form-stacked">
-
+	<form id="user-form" method="post" action="" class="form-stacked well">
+		<h1>Login To Your Account</h1>
 		<fieldset>
 			<legend><img src="<?=$baseUrl;?>images/user/password.png">Password</legend>
 			<div class="clearfix ">

@@ -62,12 +62,17 @@ class User extends Application {
 		
 		$userStorage = $this->getUserStorage();
 		if($userStorage->checkAuth($post['email'], $post['password'], $this->getConfig()->auth->salt)) {
-			$this->setAuthData($userStorage->findByEmail($post['email']));
+			$this->setAuthData(new \App\Entity\AuthUser($userStorage->findByEmail($post['email'])));
 			$this->redirect('myaccount');
 		} else {
 			$errors['message'] = 'Login failed. Please try again.';
 		}
 		$this->render('user/login', compact('errors'));
+	}
+	
+	function logout() {
+		$this->getSession()->clearAuthData();
+		$this->redirect('');
 	}
 
 	function activate() {
@@ -83,7 +88,16 @@ class User extends Application {
 	}
 	
 	function showaccount() {
-		$this->render('user/showaccount');
+		
+		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
+		$subPage = 'showaccount';
+		$this->render('user/account', compact('userAccount', 'subPage'));
+	}
+	
+	function editaccount() {
+		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
+		$subPage = 'editaccount';
+		$this->render('user/account', compact('userAccount', 'subPage'));
 	}
 	
 }

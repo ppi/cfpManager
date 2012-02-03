@@ -8,6 +8,13 @@ namespace App\Controller;
 abstract class Application extends \PPI\Controller {
 
 	public function render($template, array $params = array(), $options = array()) {
+		
+		if($this->isLoggedIn()) {
+			$params['authUser'] = $this->getUser(); 
+		}
+		
+		$params['helper'] = new \App\Helper\ViewHelper();
+		
 		return parent::render($template, $params, $options);
 	}
 	
@@ -23,7 +30,7 @@ abstract class Application extends \PPI\Controller {
 //		$params['isLoggedIn'] = $this->getSession()->isLoggedIn();
 	}
 	
-	public function setAuthData(array $data) {
+	public function setAuthData($data) {
 		$this->getSession()->setAuthData($data);
 	}
 	

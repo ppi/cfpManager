@@ -7,13 +7,17 @@
 #wrapper {
 	width: 1000px;
 	margin: 0 auto;
-	margin-top: 22px; 
 	min-height: 400px;
 }
 
 
 body {
-	background-color: #F1F1F1;
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.navbar-text a {
+	color: white;
 }
 
 .container > .content {
@@ -32,4 +36,33 @@ legend img {
 	position: relative;
 	margin-right: 8px;
 	top: -2px;
+}
+
+.user-info {
+	
+}
+
+.user-info {
+	
+}
+
+.user-info dt {
+	float: left;
+	font-weight: bold;
+	margin-right: 10px;
+	padding: 3px;
+	width: 80px;
+}
+
+.user-info dd a {
+	color: #06E;
+}
+.user-info dd {
+	margin: 2px 0;
+	padding: 3px 0;
+}
+
+.editaccount .biography textarea {
+	height: 300px;
+	width: 490px;
 }
