@@ -93,12 +93,25 @@ class User extends Application {
 	}
 	
 	function showaccount() {
+
+		$username = $this->get('username', '');
+		$viewingOwnProfile = false;
+		if(!empty($username)) {
+			$user = $this->getUserStorage()->findByUsername($username);
+		} else {
+			$this->loginCheck();
+			$user = $this->getUserStorage()->findByEmail($this->getUser()->getEmail());
+			$viewingOwnProfile = true;
+		}
 		
-		$this->loginCheck();
+		if(empty($user)) {
+			$this->setFlash('Invalid Username');
+			$this->redirect('');
+		}
 		
-		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
+		$userAccount = new \App\Entity\User($user);
 		$subPage = 'showaccount';
-		$this->render('user/account', compact('userAccount', 'subPage'));
+		$this->render('user/account', compact('userAccount', 'subPage', 'viewingOwnProfile'));
 	}
 	
 	function editaccount() {
