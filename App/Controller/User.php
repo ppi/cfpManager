@@ -118,6 +118,7 @@ class User extends Application {
 		
 		$this->loginCheck();
 		
+		
 		if($this->is('post')) {
 			
 			$post = $this->post();
@@ -151,7 +152,8 @@ class User extends Application {
 		
 		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
 		$subPage = 'editaccount';
-		$this->render('user/account', compact('userAccount', 'subPage', 'errors'));
+		$viewingOwnProfile = true;
+		$this->render('user/account', compact('userAccount', 'subPage', 'errors', 'viewingOwnProfile'));
 	}
 	
 	function editpassword() {
@@ -181,7 +183,8 @@ class User extends Application {
 		}
 		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
 		$subPage = 'editpassword';
-		$this->render('user/account', compact('userAccount', 'subPage', 'errors'));
+		$viewingOwnProfile = true;
+		$this->render('user/account', compact('userAccount', 'subPage', 'errors', 'viewingOwnProfile'));
 	}
 	
 }
