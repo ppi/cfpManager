@@ -2,10 +2,47 @@
 namespace App\Entity;
 class AuthUser {
 
+	/**
+	 * The User ID
+	 * 
+	 * @var null
+	 */
+	protected $_id = null;
+	
+	/**
+	 * The Username
+	 * 
+	 * @var null
+	 */
 	protected $_username = null;
+	
+	/**
+	 * The First Name
+	 * 
+	 * @var null
+	 */
 	protected $_firstName = null;
+	
+	/**
+	 * The Last Name
+	 * 
+	 * @var null
+	 */
 	protected $_lastName = null;
+	
+	/**
+	 * The Email Address
+	 * 
+	 * @var null
+	 */
 	protected $_email = null;
+	
+	/**
+	 * The Users Salt
+	 * 
+	 * @var null
+	 */
+	protected $_salt = null;
 	
 	/**
 	 * @param array $data
@@ -19,6 +56,10 @@ class AuthUser {
 			}
 		}
 		
+	}
+	
+	function getID() {
+		return $this->_id;
 	}
 	
 	function getFirstName() {
@@ -36,5 +77,9 @@ class AuthUser {
 	function getUsername() {
 		return $this->_username;
 	}
-
+	
+	function getSalt() {
+		return $this->_salt;
+	}
+	
 }

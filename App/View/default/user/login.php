@@ -12,7 +12,7 @@
 			</div>
 			<div class="clearfix ">
 				<div class="input">
-					<input class="span5 validate[required,minSize[5]]" onblur="validateConfirmation();" type="password" name="password" id="password" placeholder="Password">
+					<input class="span5 validate[required,minSize[4]]" onblur="validateConfirmation();" type="password" name="password" id="password" placeholder="Password">
 					<span rel="password" class="help-inline"></span>
 				</div>
 			</div>

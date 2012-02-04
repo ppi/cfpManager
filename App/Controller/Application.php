@@ -34,4 +34,10 @@ abstract class Application extends \PPI\Controller {
 		$this->getSession()->setAuthData($data);
 	}
 	
+	public function loginCheck() {
+		if(!$this->isLoggedIn()) {
+			$this->redirect('user/login');
+		}
+	}
+	
 }

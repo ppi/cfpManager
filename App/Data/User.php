@@ -14,12 +14,12 @@ class User extends \PPI\DataSource\ActiveQuery {
 	 * Create the user
 	 * 
 	 * @param array $userData
-	 * @param string $salt
+	 * @param string $configSalt
 	 * @return mixed
 	 */
-	function create(array $userData, $salt) {
+	function create(array $userData, $configSalt) {
 		
-		$encPass = $this->saltPass($salt, $userData['email'], $userData['password']);
+		$encPass = $this->saltPass($userData['salt'], $configSalt, $userData['password']);
 		
 		// Override the plaintext pass with the encrypted one 
 		$userData['password'] = $encPass;
@@ -30,13 +30,13 @@ class User extends \PPI\DataSource\ActiveQuery {
 	/**
 	 * Salt the password
 	 * 
-	 * @param string $salt
-	 * @param string $email
+	 * @param string $userSalt
+	 * @param string $configSalt
 	 * @param string $pass
 	 * @return string
 	 */
-	function saltPass($salt, $email, $pass) {
-		return sha1($salt . $email . $pass);
+	function saltPass($userSalt, $configSalt, $pass) {
+		return sha1($userSalt . $configSalt . $pass);
 	}
 	
 	/**
@@ -44,13 +44,19 @@ class User extends \PPI\DataSource\ActiveQuery {
 	 * 
 	 * @param string $email
 	 * @param string $password
-	 * @param string $salt
+	 * @param string $configSalt
 	 * @return boolean
 	 */
-	function checkAuth($email, $password, $salt) {
+	function checkAuth($email, $password, $configSalt) {
 		
-		$encPass = $this->saltPass($salt, $email, $password);
+		$user = $this->findByEmail($email);
 		
+		if(empty($user)) {
+			return false;
+		}
+		
+		
+		$encPass = $this->saltPass($user['salt'], $configSalt, $password);
 		$row = $this->_conn->createQueryBuilder()
 			->select('count(id) as total')
 			->from($this->_meta['table'], 'u')
@@ -67,6 +73,8 @@ class User extends \PPI\DataSource\ActiveQuery {
 	/**
 	 * Find a user by email
 	 * 
+	 * @todo Figure out what happens if we pass the result of this, with no rows, Which is bool(false) and into an empty() condition
+	 *       
 	 * @param string $email
 	 * @return mixed
 	 */

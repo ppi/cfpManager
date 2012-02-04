@@ -17,9 +17,13 @@ class User extends Application {
 	 * @return void
 	 */
 	function signup() {
+
+		$errors = array();
+		if(!$this->is('post')) {
+			return $this->render('user/signup', compact('errors'));
+		}
 		
 		$post = $this->post();
-		$errors = array();
 		$requiredKeys = array('userName', 'email', 'firstName', 'lastName', 'password');
 		
 		foreach($requiredKeys as $field) {
@@ -35,7 +39,8 @@ class User extends Application {
 				'email'     => $post['email'],
 				'firstName' => $post['firstName'],
 				'lastName'  => $post['lastName'],
-				'password'  => $post['password']
+				'password'  => $post['password'],
+				'salt'      => base64_encode(openssl_random_pseudo_bytes(16))
 			);
 			
 			$userStorage = $this->getUserStorage();
@@ -63,7 +68,7 @@ class User extends Application {
 		$userStorage = $this->getUserStorage();
 		if($userStorage->checkAuth($post['email'], $post['password'], $this->getConfig()->auth->salt)) {
 			$this->setAuthData(new \App\Entity\AuthUser($userStorage->findByEmail($post['email'])));
-			$this->redirect('myaccount');
+			$this->redirect('account');
 		} else {
 			$errors['message'] = 'Login failed. Please try again.';
 		}
@@ -89,15 +94,81 @@ class User extends Application {
 	
 	function showaccount() {
 		
+		$this->loginCheck();
+		
 		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
 		$subPage = 'showaccount';
 		$this->render('user/account', compact('userAccount', 'subPage'));
 	}
 	
 	function editaccount() {
+		
+		$this->loginCheck();
+		
+		if($this->is('post')) {
+			
+			$post = $this->post();
+			$requiredKeys = array('userName', 'email', 'firstName', 'lastName');
+			$errors = array();
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'This field is required';
+				}
+			}
+			if(empty($errors)) {
+				
+				$this->getUserStorage()->update(array(
+
+					'firstName'      => $post['firstName'],
+					'lastName'       => $post['lastName'],
+					'email'          => $post['email'],
+					'username'       => $post['userName'],
+					'twitter_handle' => $post['twitterHandle'],
+					'website'        => $post['website'],
+					'job_title'      => $post['jobTitle'],
+					'bio'            => $post['bio'],
+					'country'        => $post['country'],
+					
+				), array('id' => $this->getUser()->getID()));
+				
+				$this->setFlash('Account Updated');
+				$this->redirect('account');
+			}
+		}
+		
 		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
 		$subPage = 'editaccount';
-		$this->render('user/account', compact('userAccount', 'subPage'));
+		$this->render('user/account', compact('userAccount', 'subPage', 'errors'));
+	}
+	
+	function editpassword() {
+		
+		$this->loginCheck();
+		
+		$errors = array();
+		$post = $this->post();
+		if($this->is('post') && isset($post['currentPassword'], $post['password'])) {
+			
+			$userStorage = $this->getUserStorage();
+			$email       = $this->getUser()->getEmail();
+			$configSalt  = $this->getConfig()->auth->salt;
+			
+			// If the existing password is correct.
+			if($userStorage->checkAuth($email, $post['currentPassword'], $configSalt)) {
+//				var_dump($this->getUser()->getSalt(), $configSalt, $userStorage->saltPass($this->getUser()->getSalt(), $configSalt, $post['password'])); exit;
+				$userStorage->update(array(
+					'password' => $userStorage->saltPass($this->getUser()->getSalt(), $configSalt, $post['password'])
+				), array('id' => $this->getUser()->getID()));
+				
+				$this->setFlash('Password Updated');
+				$this->redirect('account');
+			} else {
+				$errors['currentPassword'] = 'Your current password is incorrect';
+			}
+		}
+		$userAccount = new \App\Entity\User($this->getUserStorage()->findByEmail($this->getUser()->getEmail()));
+		$subPage = 'editpassword';
+		$this->render('user/account', compact('userAccount', 'subPage', 'errors'));
 	}
 	
 }

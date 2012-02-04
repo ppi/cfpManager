@@ -5,6 +5,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `enabled` tinyint(1) NOT NULL,
+  `salt` varchar(255) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `website` varchar(255) DEFAULT NULL,
   `twitter_handle` varchar(255) DEFAULT NULL,
