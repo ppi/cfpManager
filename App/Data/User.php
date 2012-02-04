@@ -88,4 +88,14 @@ class User extends \PPI\DataSource\ActiveQuery {
 			->fetch($this->_meta['fetchmode']);
 	}
 	
+	function findByUsername($username) {
+		return $this->_conn->createQueryBuilder()
+			->select('u.*')
+			->from($this->_meta['table'], 'u')
+			->andWhere('u.username = :username')
+			->setParameter(':username', $username)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+	}
+	
 }
