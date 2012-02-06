@@ -4,23 +4,62 @@ namespace App\Entity;
  *
  */
 class Talk {
+	
+	/**
+	 * The Talk ID
+	 * 
+	 * @var null
+	 */
+	protected $_id = null;
 
 	/**
+	 * The title of the talk
+	 * 
 	 * @var null
 	 */
 	protected $_title = null;
+	
 	/**
+	 * The owner ID aka user ID of the talk
+	 * 
 	 * @var null
 	 */
-	protected $_author_id = null;
+	protected $_owner_id = null;
+	
 	/**
+	 * The Talk Description
+	 * 
+	 * @var null
+	 */
+	protected $_abstract = null;
+	
+	/**
+	 * The URL to the slides of the talk
+	 * 
+	 * @var null
+	 */
+	protected $_slides_url = null;
+	
+	/**
+	 * The technical level of the talk
+	 * 
 	 * @var null
 	 */
 	protected $_level = null;
+	
 	/**
+	 * The time duration of the talk
+	 * 
 	 * @var null
 	 */
 	protected $_duration = null;
+	
+	/**
+	 * Remark
+	 * 
+	 * @var null
+	 */
+	protected $_remark = null;
 
 
 	/**
@@ -35,6 +74,10 @@ class Talk {
 			}
 		}
 	}
+	
+	function getID() {
+		return $this->_id;
+	}
 
 	/**
 	 * @return null
@@ -46,14 +89,14 @@ class Talk {
 	/**
 	 * @return null
 	 */
-	function getAuthorID() {
-		return $this->_author_id;
+	function getOwnerID() {
+		return $this->_owner_id;
 	}
 
 	/**
 	 * @param Talk\Level $level
 	 */
-	function setLevel(\App\Entity\Talk\Level $level) {
+	function setLevel($level) {
 		$this->_level = $level;
 	}
 
@@ -63,12 +106,32 @@ class Talk {
 	function getLevel() {
 		return $this->_level;
 	}
+	
+	function hasLevel() {
+		return !empty($this->_level);
+	}
 
 	/**
 	 * @return null
 	 */
 	function getDuration() {
 		return $this->_duration;
+	}
+	
+	function hasDuration() {
+		return !empty($this->_duration);
+	}
+	
+	function getAbstract() {
+		return $this->_abstract;
+	}
+	
+	function setAbstract($abstract) {
+		$this->_abstract = $abstract;
+	}
+	
+	function hasAbstract() {
+		return !empty($this->_abstract);
 	}
 
 	/**
@@ -77,5 +140,31 @@ class Talk {
 	function setDuration($duration) {
 		$this->_duration = $duration;
 	}
+	
+	function getSlidesURL() {
+		return $this->_slides_url;
+	} 
+	
+	function setSlidesURL($url) {
+		$this->_slides_url = $url;
+	}
+	
+	function hasSlidesURL() {
+		return !empty($this->_slides_url);
+	}
+	
+	function hasRemark() {
+		return !empty($this->_remark);
+	}
+	
+	function getRemark() {
+		return $this->_remark;
+	}
+	
+	function setRemark($remark) {
+		$this->_remark = $remark;
+	}
+	
+	
 	
 }

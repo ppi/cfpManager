@@ -2,57 +2,168 @@
 namespace App\Controller;
 class Talk extends Application {
 	
+	function preDispatch() {
+		$this->addCSS('talk/form', 'user/account');
+		$this->addJS('libs/jquery-validationEngine-en', 'libs/jquery-validationEngine', 'app/talk/index');
+	}
+	
+	
 	function index() {
-		
-		$talks = $this->getTalkStorage()->getAll();
-		$this->addJS('talk/index');
-		$this->render('talk/index', compact('talks'));
 		
 	}
 	
 	function create() {
 		
+		$errors = array();
 		if($this->is('post')) {
-			$talkID = $this->getTalkStorage()->create($this->post());
-			$this->redirect('talk/show/' . $talkID);
+			
+			$post = $this->post();
+			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
+			
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+			if(empty($errors)) {
+				$talkID = $this->getTalkStorage()->create(array(
+					'title'      => $post['talkTitle'],
+					'slides_url' => $post['talkSlidesUrl'],
+					'duration'   => $post['talkDuration'],
+					'level'      => $post['talkLevel'],
+					'abstract'   => $post['talkAbstract'],
+					'remark'     => $post['talkRemark'],
+					'owner_id'   => $this->getUser()->getID()
+				));
+				$this->redirect('talk/view/' . $talkID);
+			}
 		}
 		
-		$this->render('talk/create');
+		$talks             = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$viewingOwnProfile = true;
+		$subPage           = 'create';
+		$this->render('talk/my', compact('talks', 'viewingOwnProfile', 'subPage'));
+	}
+	
+	function view() {
+		
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+		if(empty($talkID)) {
+			$this->redirect('');
+		}
+		
+		// -- Talk --
+		$talkStorage = $this->getTalkStorage();
+		$talk = $talkStorage->find($talkID);
+		if(empty($talk)) {
+			$this->setFlash('Invalid Talk ID');
+			$this->redirect('');
+		}
+		$talk = new \App\Entity\Talk($talk);
+		
+		// -- Talk Owner --
+		$talkOwner = new \App\Entity\User($this->getUserStorage()->find($talk->getOwnerID()));
+		if(empty($talkOwner)) {
+			$this->setFlash('Missing Talk Owner');
+			$this->redirect('');
+		}
+		
+		// -- Rendering --
+		$viewingOwnProfile = $this->isLoggedIn() && $talk->getOwnerID() == $this->getUser()->getID();
+		$subPage           = 'view';
+		$this->render('talk/my', compact('talkOwner', 'talk', 'viewingOwnProfile', 'subPage'));
 		
 	}
 	
 	function edit() {
+
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+		if(empty($talkID)) {
+			$this->setFlash('Invalid Talk ID');
+			$this->redirect('');
+		}
+
+		// -- Need to be authed --
+		$this->loginCheck();
 		
-		// Save the edit submit
-		if($this->is('post')) {
-			
+		$talk = $this->getTalkStorage()->getTalkFromID($talkID);
+		if($talk->getOwnerID() != $this->getUser()->getID()) {
+			$this->setFlash('You dont have permissions to edit this talk');
+			$this->redirect('');
 		}
 		
-		$talkID = $this->get('edit');
-		$talk = $this->getTalkStorage()->getTalkFromID($talkID);
-		$this->render('talk/edit', compact('talk'));
+		// -- Save the form --
+		if($this->is('post')) {
+
+			$post = $this->post();
+			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
+			
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+			
+			if(empty($errors)) {
+				$talkID = $this->getTalkStorage()->update(array(
+					'title'      => $post['talkTitle'],
+					'slides_url' => $post['talkSlidesUrl'],
+					'duration'   => $post['talkDuration'],
+					'level'      => $post['talkLevel'],
+					'abstract'   => $post['talkAbstract'],
+					'remark'     => $post['talkRemark'],
+					'owner_id'   => $this->getUser()->getID()
+				), array('id' => $talk->getOwnerID()));
+				$this->redirect('talk/view/' . $talkID);
+			}
+		}
+		
+		// -- Rendering --
+		$viewingOwnProfile = true;
+		$subPage           = 'edit';
+		$this->render('talk/my', compact('talk', 'viewingOwnProfile', 'subPage'));
 		
 	}
 	
-	function remove() {
+	function delete() {
 		
-		$talkID = $this->get('remove');
-		$talk = $this->getTalkStorage()->getByID($talkID);
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+
+		// -- Auth --
+		$this->loginCheck();
+		
+		$ts = $this->getTalkStorage();
+
+		// -- Get the talk --
+		$talk = $ts->getTalkFromID($talkID);
 		
 		// Do you haz control?
-		if($talk->getOwnerID() == $this->getUser()->getID()) {
-			
+		if($talk->getOwnerID() != $this->getUser()->getID()) {
+			$this->setFlash('Naughty! You don\'t own this talk.');
+			$this->redirect('');
 		}
+		
+		$ts->delete(array('id' => $talk->getID()));
+		
+		$this->setFlash('Talk successfully deleted');
+		$this->redirect('my/talks');
 		
 	}
 	
 	/**
-	 * Get the talk storage class
-	 * 
-	 * @return \App\Data\Talk
+	 * View all the talks belonging to the current user
 	 */
-	protected function getTalkStorage() {
-		return new \App\Data\Talk();
+	function my() {
+		
+		$this->loginCheck();
+		
+		$talks = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$viewingOwnProfile = true;
+		$subPage = 'list';
+		$this->render('talk/my', compact('talks', 'viewingOwnProfile', 'subPage'));
 	}
 	
 	

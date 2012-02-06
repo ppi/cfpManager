@@ -8,5 +8,5 @@
 	<script type="text/javascript">var baseUrl = "<?= $baseUrl; ?>";</script>
 	<?php include_once($viewDir . 'framework/stylesheet.php'); ?>
 	
-	<title>PPI Skeleton Application</title>
+	<title>Call For Papers</title>
 </head>

@@ -7,16 +7,17 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</a>
-		<a class="brand" href="#">Call for Papers</a>
+		<a class="brand" href="<?=$baseUrl; ?>">Call for Papers</a>
 		<div class="nav-collapse">
-			<ul class="nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Link</a></li>
-				<li><a href="#">Link</a></li>
-			</ul>
-			<ul class="nav pull-right">
-				
 
+			<ul class="nav">
+				<li class="<?=$request['controller'] == 'home' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>">Home</a></li>
+				<?php if($isLoggedIn && $authUser->isAdmin()): ?>
+				<li class="<?=$request['controller'] == 'manage' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>manage" title="Manage">Manage</a></li>
+				<?php endif; ?>
+			</ul>
+			
+			<ul class="nav pull-right">
 				<?php if($isLoggedIn): ?>
 				<li><p class="navbar-text">Logged in as <a href="<?= $baseUrl; ?>account"><?=$helper->escape($authUser->getUsername()); ?></a></p></li>
 				<li class="divider-vertical"></li>
@@ -26,8 +27,7 @@
 						<li><a href="<?=$baseUrl;?>account">View Account</a></li>
 						<li><a href="<?=$baseUrl; ?>account/edit">Edit Account</a></li>
 						<li class="divider"></li>
-						<li><a href="#">My Talks</a></li>
-						<li><a href="#">My Submissions</a></li>
+						<li><a href="<?=$baseUrl;?>my/talks">My Talks</a></li>
 						<li class="divider"></li>
 						<li><a href="<?=$baseUrl;?>user/logout">Log out</a></li>
 					</ul>

@@ -1,9 +1,9 @@
 jQuery(document).ready(function($) {
-	$('#register').validationEngine({
+	$('#talk-form').validationEngine({
 		scroll: false
 	});
 
-	$("#register").bind("jqv.field.result", function(event, field, errorFound, promptText) {
+	$("#talk-form").bind("jqv.field.result", function(event, field, errorFound, promptText) {
 		if(errorFound){
 			field.parent().parent().removeClass('success').addClass('error');
 			$('span[rel="' + field.attr('id') + '"]').html(promptText);
@@ -15,5 +15,5 @@ jQuery(document).ready(function($) {
 });
 
 function validateConfirmation() {
-	jQuery('#register').validationEngine('validateField', '#confirm');
+	jQuery('#talk-form').validationEngine('validateField', '#confirm');
 }

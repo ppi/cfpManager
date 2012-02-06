@@ -2,6 +2,7 @@
 namespace App\Entity;
 class User {
 	
+	protected $_id = null;
 	protected $_username = null;
 	protected $_firstName = null;
 	protected $_lastName = null;
@@ -14,6 +15,20 @@ class User {
 	protected $_bio = null;
 	
 	/**
+	 * Are they an admin
+	 * 
+	 * @var null
+	 */
+	protected $_is_admin = null;
+	
+	/**
+	 * Can Vote
+	 * 
+	 * @var null
+	 */
+	protected $_can_vote = null;
+	
+	/**
 	 * Talks
 	 * 
 	 * @var array
@@ -22,12 +37,14 @@ class User {
 	
 	function __construct(array $data) {
 		foreach ($data as $key => $value) {
-			if (method_exists($this, 'set' . $key)) {
-				$this->{'set' . $key}($value);
-			} elseif (property_exists($this, '_' . $key)) {
+			if (property_exists($this, '_' . $key)) {
 				$this->{'_' . $key} = $value;
 			}
 		}
+	}
+	
+	function getID() {
+		return $this->_id;
 	}
 	
 	function getTalks() {
@@ -106,4 +123,11 @@ class User {
 		return !empty($this->_country);
 	}
 	
+	function isAdmin() {
+		return $this->_is_admin == 1;
+	}
+	
+	function canVote() {
+		return $this->_can_vote == 1;
+	} 
 }

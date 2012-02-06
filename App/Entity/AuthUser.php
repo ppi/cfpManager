@@ -45,6 +45,20 @@ class AuthUser {
 	protected $_salt = null;
 	
 	/**
+	 * Are they an admin
+	 * 
+	 * @var null
+	 */
+	protected $_is_admin = null;
+	
+	/**
+	 * Can Vote
+	 * 
+	 * @var null
+	 */
+	protected $_can_vote = null;
+	
+	/**
 	 * @param array $data
 	 */
 	function __construct(array $data) {
@@ -81,5 +95,13 @@ class AuthUser {
 	function getSalt() {
 		return $this->_salt;
 	}
+	
+	function isAdmin() {
+		return $this->_is_admin == 1;
+	}
+	
+	function canVote() {
+		return $this->_can_vote == 1;
+	} 
 	
 }

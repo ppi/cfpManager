@@ -1,0 +1,22 @@
+#talkAbstract {
+	height: 200px;
+	width: 450px;
+}
+
+#talkRemark {
+	height: 200px;
+	width: 450px;
+}
+
+#talk-form  input[type="text"] {
+	width: 450px;
+}
+
+.formError {
+	display: none;
+}
+
+.actions-button  a.view-button,
+.actions-button a.view-button:visited {
+	color: white;
+}

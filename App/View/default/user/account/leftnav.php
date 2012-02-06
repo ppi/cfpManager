@@ -11,7 +11,6 @@
 			<a href="<?=$baseUrl;?>account/edit/password"><i class="icon-cog"></i> Edit Password</a>
 		</li>
 		<li class="nav-header">Talks Management</li>
-		<li class=""><a href="#"><i class="icon-film"></i> My Talks</a></li>
-		<li class=""><a href="#"><i class="icon-calendar"></i> My Submissions</a></li>
+		<li class="<?= $request['controller'] == 'talk' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>my/talks"><i class="icon-film"></i> My Talks</a></li>
 	</ul>
 </div>

@@ -40,4 +40,24 @@ abstract class Application extends \PPI\Controller {
 		}
 	}
 	
+	
+	/**
+	 * Get the talk storage class
+	 * 
+	 * @return \App\Data\Talk
+	 */
+	public function getTalkStorage() {
+		return new \App\Data\Talk();
+	}
+	
+	
+	/**
+	 * Get the talk storage class
+	 * 
+	 * @return \App\Data\User
+	 */
+	protected function getUserStorage() {
+		return new \App\Data\User();
+	}
+	
 }

@@ -1,6 +1,6 @@
 <?php
 namespace App\Data;
-
+use App\Entity\User as UserEntity;
 class User extends \PPI\DataSource\ActiveQuery {
 	
 	protected $_meta = array(
@@ -96,6 +96,24 @@ class User extends \PPI\DataSource\ActiveQuery {
 			->setParameter(':username', $username)
 			->execute()
 			->fetch($this->_meta['fetchmode']);
+	}
+	
+	function getAll() {
+		$rows = $this->fetchAll();
+		$users = array();
+		foreach($rows as $row) {
+			$users[] = new UserEntity($row);
+		}
+		return $users;
+	}
+	
+	function getByID($userID) {
+		return new UserEntity($this->find($userID));
+	}
+	
+	function exists($userID) {
+		$row = $this->find($userID);
+		return !empty($row);
 	}
 	
 }

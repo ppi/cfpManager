@@ -3,7 +3,7 @@ namespace App\Controller;
 class User extends Application {
 
 	function preDispatch() {
-		$this->addCSS('user/signup');
+		$this->addCSS('user/talk', 'user/account');
 		$this->addJS('libs/jquery-validationEngine-en', 'libs/jquery-validationEngine', 'app/user/general');
 	}
 	
@@ -79,17 +79,9 @@ class User extends Application {
 		$this->getSession()->clearAuthData();
 		$this->redirect('');
 	}
-
-	function activate() {
-		
-	}
 	
 	function forgotpw() {
 		$this->render('user/forgotpw');
-	}
-	
-	protected function getUserStorage() {
-		return new \App\Data\User();
 	}
 	
 	function showaccount() {
@@ -117,8 +109,6 @@ class User extends Application {
 	function editaccount() {
 		
 		$this->loginCheck();
-		
-		
 		if($this->is('post')) {
 			
 			$post = $this->post();
@@ -170,7 +160,6 @@ class User extends Application {
 			
 			// If the existing password is correct.
 			if($userStorage->checkAuth($email, $post['currentPassword'], $configSalt)) {
-//				var_dump($this->getUser()->getSalt(), $configSalt, $userStorage->saltPass($this->getUser()->getSalt(), $configSalt, $post['password'])); exit;
 				$userStorage->update(array(
 					'password' => $userStorage->saltPass($this->getUser()->getSalt(), $configSalt, $post['password'])
 				), array('id' => $this->getUser()->getID()));
