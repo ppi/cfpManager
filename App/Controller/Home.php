@@ -4,8 +4,12 @@ class Home extends Application {
 
 	function index() {
 		
+		$cs           = $this->getContentStorage();
+		$titleContent = $cs->getContentByTitle('home_title');
+		$mainContent  = $cs->getContentByTitle('home_content');
+		
 		$this->addCSS('home');
-		$this->render('home/index');
+		$this->render('home/index', compact('titleContent', 'mainContent'));
 	}
 
 }
