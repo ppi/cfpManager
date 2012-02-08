@@ -12,9 +12,9 @@
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="talkDur30">Duration (mins)</label>
+				<label class="control-label" for="talkDur<?=$talkDurations[0]; ?>">Duration (mins)</label>
 				<div class="controls">
-					<?php foreach(array('30', '45', '60') as $val): ?>
+					<?php foreach($talkDurations as $val): ?>
 					<label class="radio inline">
 						<input type="radio" name="talkDuration" id="talkDur<?=$val; ?>" value="<?=$val; ?>" checked=""><?=$val; ?>
 					</label>

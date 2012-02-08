@@ -40,9 +40,10 @@ class Talk extends Application {
 		}
 		
 		$talks             = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$talkDurations     = $this->getConfig()->talk->duration->toArray();
 		$viewingOwnProfile = true;
 		$subPage           = 'create';
-		$this->render('talk/my', compact('talks', 'viewingOwnProfile', 'subPage'));
+		$this->render('talk/my', compact('talks', 'viewingOwnProfile', 'subPage', 'talkDurations'));
 	}
 	
 	function view() {
@@ -125,7 +126,8 @@ class Talk extends Application {
 		// -- Rendering --
 		$viewingOwnProfile = true;
 		$subPage           = 'edit';
-		$this->render('talk/my', compact('talk', 'viewingOwnProfile', 'subPage'));
+		$talkDurations     = $this->getConfig()->talk->duration->toArray();
+		$this->render('talk/my', compact('talk', 'viewingOwnProfile', 'subPage', 'talkDurations'));
 		
 	}
 	
