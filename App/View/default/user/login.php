@@ -26,7 +26,7 @@
 		</fieldset>
 			
 		<div class="actions">
-			<button class="btn primary" type="submit">Register</button>
+			<button class="btn primary" type="submit">Log In</button>
 		</div>
 	
 	</form>
