@@ -4,6 +4,7 @@ class Manage extends Application {
 
 	function preDispatch() {
 		$this->addCSS('user/talk', 'user/account', 'manage/listing');
+		$this->addJS('libs/jquery-validationEngine-en', 'libs/jquery-validationEngine', 'app/manage/form');
 	}
 	
 	function index() {
@@ -56,36 +57,46 @@ class Manage extends Application {
 	{
 		
 		$errors = array();
-		if(!$this->is('post')) {
-			return $this->render('user/signup', compact('errors'));
-		}
-		
-		$post = $this->post();
-		$requiredKeys = array('userName', 'email', 'firstName', 'lastName', 'password');
-		
-		foreach($requiredKeys as $field) {
-			if(!isset($post[$field]) || empty($post[$field])) {
-				$errors[$field] = 'Field is required';
+
+		if($this->is('post')) {
+			$post = $this->post();
+			$requiredKeys = array('userName', 'email', 'firstName', 'lastName', 'password');
+			
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+			
+			if(empty($errors)) {
+			
+				$user = array(
+					
+					'firstName'      => $post['firstName'],
+					'lastName'       => $post['lastName'],
+					'email'          => $post['email'],
+					'username'       => $post['userName'],
+					'password'  => $post['password'],
+					'salt'      => base64_encode(openssl_random_pseudo_bytes(16)),
+
+					'twitter_handle' => $post['twitterHandle'],
+					'website'        => $post['website'],
+					'job_title'      => $post['jobTitle'],
+					'company_name'   => $post['companyName'],
+					'bio'            => $post['bio'],
+					'country'        => $post['country'],
+
+				);
+				
+				$userStorage = $this->getUserStorage();
+				$newUserID = $userStorage->create($user, $this->getConfig()->auth->salt);
+				$this->redirect('manage/users');
 			}
 		}
-		
-		if(empty($errors)) {
-		
-			$user = array(
-				'username'  => $post['userName'],
-				'email'     => $post['email'],
-				'firstName' => $post['firstName'],
-				'lastName'  => $post['lastName'],
-				'password'  => $post['password'],
-				'salt'      => base64_encode(openssl_random_pseudo_bytes(16))
-			);
-			
-			$userStorage = $this->getUserStorage();
-			$newUserID = $userStorage->create($user, $this->getConfig()->auth->salt);
-			$this->redirect('user/login');
-		}
-		
-		$this->render('user/signup', compact('errors'));
+		// -- Rendering --
+		$subPage = 'users/create';
+		$section = 'users';
+		$this->render('manage/index', compact('user', 'subPage', 'errors', 'section'));
 	}
 	
 	function edituser() {

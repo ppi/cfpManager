@@ -13,7 +13,6 @@
 				<th>Email</th>
 				<th>Twitter</th>
 				<th>Job Title</th>
-				<th>Country</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -29,7 +28,6 @@
 				<td>&nbsp;</td>
 				<?php endif; ?>
 				<td><?=$helper->escape($user->getJobTitle()); ?></td>
-				<td><?=$helper->escape($user->getCountry()); ?></td>
 				<td class="actions">
 					<div class="btn-group actions-button">
 						<a class="btn btn-primary view-button" href="<?=$baseUrl;?>manage/users/view/<?=$user->getID(); ?>"><i class="icon white user"></i> View</a>

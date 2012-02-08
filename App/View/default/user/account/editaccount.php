@@ -49,7 +49,7 @@
 				<label class="control-label" for="companyName">Company Name</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge]" id="companyName" name="companyName" value="<?=$userAccount->getCompanyName(); ?>">
-					<span rel="jobTitle" class="help-inline"></span>
+					<span rel="companyName" class="help-inline"></span>
 				</div>
 			</div>
 			

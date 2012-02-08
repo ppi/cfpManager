@@ -1,6 +1,6 @@
 <div class="well editaccount" style="margin-bottom: 0; padding-bottom: 0;">
 		
-	<form class="form-horizontal" style="margin-bottom: 0;" action="" method="post" id="talk-form">
+	<form class="form-horizontal" style="margin-bottom: 0;" action="" method="post" id="manage-form">
 		<fieldset>
 			<legend>Create Your Talk</legend>
 			<div class="control-group">
