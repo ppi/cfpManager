@@ -437,7 +437,7 @@ class Manage extends Application {
 			}
 
 			if(empty($errors)) {
-				$contentID = $this->getContentStorage()->update(array(
+				 $this->getContentStorage()->update(array(
 					'title'     => $post['contentTitle'],
 					'content'   => $post['contentContent']
 				), array('id' => $contentID));
