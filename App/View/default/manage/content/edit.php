@@ -2,62 +2,21 @@
 		
 	<form class="form-horizontal" style="margin-bottom: 0;" action="" method="post" id="manage-form">
 		<fieldset>
-			<legend>Create Your Talk</legend>
+			<legend>Edit Your Talk</legend>
 			<div class="control-group">
 				<label class="control-label" for="talkTitle">Title</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="talkTitle" name="talkTitle" value="<?=$helper->escape($talk->getTitle()); ?>">
+					<input type="text" class="input-xlarge validate[required]" id="contentTitle" name="contentTitle" value="<?=$helper->escape($content->getTitle()); ?>">
+					<span rel="contentTitle" class="help-inline"></span>
 				</div>
 			</div>
 			
 			<div class="control-group">
-				<label class="control-label" for="talkDur<?=$talkDurations[0]; ?>">Duration (mins)</label>
+				<label class="control-label" for="talkAbstract">Content</label>
 				<div class="controls">
+					<textarea class="input-xlarge validate[required]" id="contentContent" name="contentContent"><?=$helper->escape($content->getContent()); ?></textarea>
+					<span rel="contentContent" class="help-inline"></span>
 					
-					<?php foreach($talkDurations as $val): ?>
-					
-					<label class="radio inline">
-						<input type="radio" name="talkDuration" id="talkDur<?=$val; ?>" value="<?=$val; ?>" <?= $talk->getDuration() == $val ? 'checked' : ''; ?>><?=$val; ?>
-					</label>
-
-					<?php endforeach; ?>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" for="talkLevelBeginner">Level</label>
-				<div class="controls">
-					
-					<?php foreach(array('Beginner', 'Intermediate', 'Advanced') as $val): ?>
-					
-					<label class="radio inline">
-						<input type="radio" name="talkLevel" id="talkLevel<?=$val; ?>" value="<?=$val; ?>" <?= $talk->getLevel() == $val ? 'checked' : ''; ?>><?=$val; ?>
-					</label>
-
-					<?php endforeach; ?>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" for="talkSlidesUrl">Slides Url</label>
-				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="talkSlidesUrl" name="talkSlidesUrl" value="<?=$helper->escape($talk->getSlidesUrl()); ?>">
-				</div>
-			</div>
-			
-			<hr>
-			
-			<div class="control-group">
-				<label class="control-label" for="talkAbstract">Abstract</label>
-				<div class="controls">
-					<textarea class="input-xlarge validate[required]" id="talkAbstract" name="talkAbstract"><?=$helper->escape($talk->getAbstract()); ?></textarea>
-				</div>
-			</div>
-			
-			<div class="control-group">
-				<label class="control-label" for="talkRemark">Remarks</label>
-				<div class="controls">
-					<textarea class="input-xlarge" id="talkRemark" name="talkRemark"><?=$helper->escape($talk->getRemark()); ?></textarea>
 				</div>
 			</div>
 			

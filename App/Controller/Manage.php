@@ -365,6 +365,16 @@ class Manage extends Application {
 	}
 
 	function createcontent() {
+
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
 		
 		$errors = array();
 		if($this->is('post')) {
@@ -398,6 +408,22 @@ class Manage extends Application {
 	
 	function editcontent() {
 		
+		// -- Params --
+		$contentID = $this->get(__FUNCTION__);
+		if(empty($contentID)) {
+			$this->setFlash('Invalid Contnet ID');
+			$this->redirect('');
+		}
+		
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
 		$errors = array();
 		if($this->is('post')) {
 			
@@ -411,28 +437,27 @@ class Manage extends Application {
 			}
 
 			if(empty($errors)) {
-				$contentID = $this->getContentStorage()->create(array(
+				$contentID = $this->getContentStorage()->update(array(
 					'title'     => $post['contentTitle'],
 					'content'   => $post['contentContent']
-				));
+				), array('id' => $contentID));
 				$this->redirect('manage/content/view/' . $contentID);
 			}
 		}
 		
-		$talks         = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
-		$subPage       = 'talks/create';
-		$section       = 'talks';
-		$talkDurations = $this->getConfig()->talk->duration->toArray();
+		$content  = $this->getContentStorage()->getContentFromID($contentID);
+		$subPage  = 'content/edit';
+		$section  = 'content';
 		
-		$this->addCSS('manage/talk');
-		$this->render('manage/index', compact('talks', 'subPage', 'section', 'talkDurations'));
+		$this->addCSS('manage/content');
+		$this->render('manage/index', compact('content', 'subPage', 'section'));
 		
 	}
 	
-	function contentdelete() {
+	function deletecontent() {
 		
 		// -- Params --
-		$talkID = $this->get(__FUNCTION__);
+		$contentID = $this->get(__FUNCTION__);
 
 		// -- Need to be authed --
 		$this->loginCheck();
@@ -446,12 +471,12 @@ class Manage extends Application {
 		$cs = $this->getContentStorage();
 
 		// -- Get the talk --
-		$talk = $cs->getContentFromID($talkID);
+		$content = $cs->getContentFromID($contentID);
 		
-		$cs->delete(array('id' => $talk->getID()));
+		$cs->delete(array('id' => $content->getID()));
 		
-		$this->setFlash('Talk successfully deleted');
-		$this->redirect('manage/talks');
+		$this->setFlash('Content successfully deleted');
+		$this->redirect('manage/content');
 		
 	}
 	
