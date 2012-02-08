@@ -1,5 +1,11 @@
 <div class="span10" id="user-signup-page">
 
+	<?php if(!empty($errors)): ?>
+	<div class="alert alert-error">
+		<?= implode('<br>', $errors); ?>
+	</div>
+	<?php endif; ?>
+	
 	<form id="user-form" method="post" action="" class="form-stacked well">
 		<h1>Login To Your Account</h1>
 		<fieldset>
