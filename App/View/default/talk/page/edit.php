@@ -40,7 +40,7 @@
 			<div class="control-group">
 				<label class="control-label" for="talkSlidesUrl">Slides Url</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="talkSlidesUrl" name="talkSlidesUrl" value="<?=$helper->escape($talk->getSlidesUrl()); ?>">
+					<input type="text" class="input-xlarge" id="talkSlidesUrl" name="talkSlidesUrl" value="<?=$helper->escape($talk->getSlidesUrl()); ?>">
 					<span rel="talkSlidesUrl" class="help-inline"></span>
 				</div>
 			</div>

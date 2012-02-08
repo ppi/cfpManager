@@ -99,7 +99,7 @@ class Talk extends Application {
 		if($this->is('post')) {
 
 			$post = $this->post();
-			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
+			$requiredKeys = array('talkTitle', 'talkDuration', 'talkLevel', 'talkAbstract');
 			$errors = array();
 			foreach($requiredKeys as $field) {
 				if(!isset($post[$field]) || empty($post[$field])) {
@@ -107,6 +107,7 @@ class Talk extends Application {
 				}
 			}
 			if(empty($errors)) {
+				
 				$this->getTalkStorage()->update(array(
 					'title'      => $post['talkTitle'],
 					'slides_url' => $post['talkSlidesUrl'],
@@ -116,6 +117,7 @@ class Talk extends Application {
 					'remark'     => $post['talkRemark'],
 					'owner_id'   => $this->getUser()->getID()
 				), array('id' => $talk->getID()));
+				
 				$this->redirect('talk/view/' . $talkID);
 			}
 		}

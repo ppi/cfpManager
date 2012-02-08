@@ -36,7 +36,7 @@
 			<div class="control-group">
 				<label class="control-label" for="talkSlidesUrl">Slides Url</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="talkSlidesUrl" name="talkSlidesUrl">
+					<input type="text" class="input-xlarge" id="talkSlidesUrl" name="talkSlidesUrl">
 					<span rel="talkSlidesUrl" class="help-inline"></span>
 				</div>
 			</div>
