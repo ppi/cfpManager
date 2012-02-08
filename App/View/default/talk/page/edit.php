@@ -11,6 +11,9 @@
 				</div>
 			</div>
 			
+			<?php if(count($talkDurations) == 1): ?>
+			<input type="hidden" name="talkDuration" id="talkDuration" value="<?=$talk->getDuration(); ?>">
+			<?php else: ?>
 			<div class="control-group">
 				<label class="control-label" for="talkDur<?=$talkDurations[0]; ?>">Duration (mins)</label>
 				<div class="controls">
@@ -21,7 +24,8 @@
 					<?php endforeach; ?>
 				</div>
 			</div>
-			
+			<?php endif; ?>
+
 			<div class="control-group">
 				<label class="control-label" for="talkLevelBeginner">Level</label>
 				<div class="controls">
