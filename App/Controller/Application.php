@@ -60,4 +60,11 @@ abstract class Application extends \PPI\Controller {
 		return new \App\Data\User();
 	}
 	
+	/**
+	 * @return \App\Data\Content
+	 */
+	protected function getContentStorage() {
+		return new \App\Data\Content();
+	}
+	
 }

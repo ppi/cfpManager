@@ -7,5 +7,8 @@
 		<li class="<?= $section == 'talks' ? 'active' : ''; ?>">
 			<a href="<?=$baseUrl; ?>manage/talks"><i class="icon-film"></i> Talks</a>
 		</li>
+		<li class="<?= $section == 'content' ? 'active' : ''; ?>">
+			<a href="<?=$baseUrl; ?>manage/content"><i class="icon-text-width"></i> Content</a>
+		</li>
 	</ul>
 </div>

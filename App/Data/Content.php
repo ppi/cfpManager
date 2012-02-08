@@ -1,43 +1,76 @@
 <?php
 namespace App\Data;
 
-/**
- *
- */
-class Comment extends \PPI\DataSource\ActiveQuery {
+use App\Entity\Content as ContentEntity;
+class Content extends \PPI\DataSource\ActiveQuery {
 	
 	protected $_meta = array(
-		'conn'    => 'main',
-		'table'   => 'comment',
-		'primary' => 'id'
+		'conn'      => 'main',
+		'table'     => 'content',
+		'primary'   => 'id',
+		'fetchmode' => \PDO::FETCH_ASSOC
 	);
 
-	/**
-	 * Create a comment on a talk
-	 * 
-	 * @param string $comment
-	 * @param integer $talkID
-	 * @param integer $userID
-	 * @return integer
-	 */
-	function commentOnTalk($comment, $talkID, $userID) {
-		$created = time();
-		$talk_id = $talkID;
-		$user_id = $userID;
-		return $this->insert(compact('comment', 'talk_id', 'user_id', 'created'));
+	function create(array $data) {
+		return $this->insert($data);
+	}	
+	
+	function getContentByTitle($title) {
+		
+		if(!$this->existsByTitle($title)) {
+			throw new \Exception('Unable to get content for: ' . $title);
+		}
+		return new ContentEntity($this->findByTitle($title));
 	}
-
-	/**
-	 * Create a comment on a CFP Process
-	 * 
-	 * @param string $comment
-	 * @param integer $userID
-	 * @return integer
-	 */
-	function commentOnCFP($comment, $userID) {
-		$created = time();
-		$user_id = $userID;
-		return $this->insert(compact('comment', 'talk_id', 'user_id', 'created'));
+	
+	function findByTitle($title) {
+		return $this->_conn->createQueryBuilder()
+			->select('c.*')
+			->from($this->_meta['table'], 'c')
+			->andWhere('c.title = :title')
+			->setParameter(':title', $title)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+	}
+	
+	function existsByTitle($title) {
+		$row = $this->_conn->createQueryBuilder()
+			->select('count(id) as total')
+			->from($this->_meta['table'], 'c')
+			->andWhere('c.title = :title')
+			->setParameter(':title', $title)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+		
+		return $row['total'] > 0;
+	}
+	
+	function existsByID($id) {
+		$row = $this->_conn->createQueryBuilder()
+			->select('count(id) as total')
+			->from($this->_meta['table'], 'c')
+			->andWhere('c.id = :id')
+			->setParameter(':id', $id)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+		
+		return $row['total'] > 0;
+	}
+	
+	function getContentFromID($id) {
+		if(!$this->existsByID($id)) {
+			throw new \Exception('Unable to get content for ID: ' . $id);
+		}
+		return new ContentEntity($this->find($id));
+	}
+	
+	function getAll() {
+		$content = array();
+		$rows = $this->fetchAll();
+		foreach($rows as $row) {
+			$content[] = new ContentEntity($row);
+		}
+		return $content;
 	}
 	
 }

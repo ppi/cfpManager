@@ -262,7 +262,6 @@ class Manage extends Application {
 		$subPage           = 'talks/view';
 		$section           = 'talks';
 		$this->render('manage/index', compact('talkOwner', 'talk', 'section', 'subPage'));
-		
 	}
 	
 	function edittalk() {
@@ -347,6 +346,129 @@ class Manage extends Application {
 		$this->redirect('manage/talks');
 	}
 	
-//	function 
+	function content() {
+		
+		// -- Permissions --
+		$this->loginCheck();
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
+		// -- Entity Stuff --
+		$allContent = $this->getContentStorage()->getAll();
+		
+		// -- Render --
+		$subPage = $section = 'content';
+		$this->render('manage/index', compact('allContent', 'subPage', 'section'));
+		
+	}
+
+	function createcontent() {
+		
+		$errors = array();
+		if($this->is('post')) {
+			
+			$post = $this->post();
+			$requiredKeys = array('contentTitle', 'contentContent');
+			
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+
+			if(empty($errors)) {
+				$contentID = $this->getContentStorage()->create(array(
+					'title'   => $post['contentTitle'],
+					'content' => $post['contentContent']
+				));
+				$this->redirect('manage/content/view/' . $contentID);
+			}
+		}
+		
+		$allContent         = $this->getContentStorage()->getAll();
+		$subPage       = 'content/create';
+		$section       = 'content';
+		
+		$this->addCSS('manage/content');
+		$this->render('manage/index', compact('talks', 'subPage', 'section', 'talkDurations'));
+		
+	}
 	
+	function editcontent() {
+		
+		$errors = array();
+		if($this->is('post')) {
+			
+			$post = $this->post();
+			$requiredKeys = array('contentTitle', 'contentContent');
+			
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+
+			if(empty($errors)) {
+				$contentID = $this->getContentStorage()->create(array(
+					'title'     => $post['contentTitle'],
+					'content'   => $post['contentContent']
+				));
+				$this->redirect('manage/content/view/' . $contentID);
+			}
+		}
+		
+		$talks         = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$subPage       = 'talks/create';
+		$section       = 'talks';
+		$talkDurations = $this->getConfig()->talk->duration->toArray();
+		
+		$this->addCSS('manage/talk');
+		$this->render('manage/index', compact('talks', 'subPage', 'section', 'talkDurations'));
+		
+	}
+	
+	function contentdelete() {
+		
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
+		$cs = $this->getContentStorage();
+
+		// -- Get the talk --
+		$talk = $cs->getContentFromID($talkID);
+		
+		$cs->delete(array('id' => $talk->getID()));
+		
+		$this->setFlash('Talk successfully deleted');
+		$this->redirect('manage/talks');
+		
+	}
+	
+	function viewcontent() {
+		// -- Params --
+		$contentID = $this->get(__FUNCTION__);
+		if(empty($contentID)) {
+			$this->redirect('');
+		}
+		
+		// -- Talk --
+		$cs = $this->getContentStorage();
+		$content = $cs->getContentFromID($contentID);
+		
+		// -- Rendering --
+		$subPage  = 'content/view';
+		$section  = 'content';
+		$this->render('manage/index', compact('content', 'section', 'subPage'));
+	}
 }

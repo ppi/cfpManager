@@ -149,3 +149,9 @@ html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 #sortable li p {
 	margin-top: 2px;
 }
+
+/** -- Form Validation -- **/
+.control-group .help-inline {
+	display: block;
+	margin-top: 5px;
+}

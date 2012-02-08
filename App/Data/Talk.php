@@ -12,9 +12,7 @@ class Talk extends \PPI\DataSource\ActiveQuery {
 	);
 	
 	function create($data) {
-		
 		return $this->insert($data);
-		
 	}
 	
 	/**
