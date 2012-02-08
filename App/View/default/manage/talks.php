@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well crud-list" id="manage-talks">
 <?php if(empty($talks)): ?>
 	<h3>You have not created any talks yet. &nbsp; &nbsp; <a class="btn" href="<?=$baseUrl;?>manage/talks/create"><i class="icon-plus-sign"></i> Create Talk</a></h3>
 <?php else: ?>

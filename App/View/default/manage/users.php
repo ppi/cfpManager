@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well crud-list">
 <?php if(empty($users)): ?>
 	<h3>You have not created any users yet. &nbsp; &nbsp; <a class="btn" href="<?=$baseUrl;?>manage/users/create"><i class="icon-plus-sign"></i> Create User</a></h3>
 <?php else: ?>

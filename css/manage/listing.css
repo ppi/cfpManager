@@ -1,3 +1,8 @@
 td.actions {
 	width: 80px;
 }
+
+.crud-list table .actions-button .view-button,
+.crud-list table .actions-button .view-button:visited {
+	color: white;
+}
