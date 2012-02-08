@@ -223,12 +223,13 @@ class Manage extends Application {
 			}
 		}
 		
-		$talks    = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
-		$subPage  = 'talks/create';
-		$section  = 'talks';
+		$talks         = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$subPage       = 'talks/create';
+		$section       = 'talks';
+		$talkDurations = $this->getConfig()->talk->duration->toArray();
 		
 		$this->addCSS('manage/talk');
-		$this->render('manage/index', compact('talks', 'subPage', 'section'));
+		$this->render('manage/index', compact('talks', 'subPage', 'section', 'talkDurations'));
 	}
 	
 	function viewtalk() {
@@ -312,11 +313,12 @@ class Manage extends Application {
 		}
 		
 		// -- Rendering --
-		$section = 'talks';
-		$subPage = 'talks/edit';
+		$section       = 'talks';
+		$subPage       = 'talks/edit';
+		$talkDurations = $this->getConfig()->talk->duration->toArray();
 		
 		$this->addCSS('manage/talk');
-		$this->render('manage/index', compact('talk', 'section', 'subPage'));
+		$this->render('manage/index', compact('talk', 'section', 'subPage', 'talkDurations'));
 		
 	}
 	
