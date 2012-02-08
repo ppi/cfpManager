@@ -107,7 +107,7 @@ class Talk extends Application {
 			}
 			
 			if(empty($errors)) {
-				$talkID = $this->getTalkStorage()->update(array(
+				$this->getTalkStorage()->update(array(
 					'title'      => $post['talkTitle'],
 					'slides_url' => $post['talkSlidesUrl'],
 					'duration'   => $post['talkDuration'],

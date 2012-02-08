@@ -1,8 +1,8 @@
 <?php
 namespace App\Entity;
-/**
- *
- */
+
+use App\Entity\User as UserEntity;
+
 class Talk {
 	
 	/**
@@ -25,6 +25,13 @@ class Talk {
 	 * @var null
 	 */
 	protected $_owner_id = null;
+	
+	/**
+	 * Get the owner ID's name. This is just a shortcut to save us grabbing the main entity.
+	 * 
+	 * @var null
+	 */
+	protected $_owner_name = null;
 	
 	/**
 	 * The Talk Description
@@ -60,6 +67,13 @@ class Talk {
 	 * @var null
 	 */
 	protected $_remark = null;
+	
+	/**
+	 * Get the talk owner entity object
+	 * 
+	 * @var null|App\Entity\User
+	 */
+	protected $_talk_owner = null;
 
 
 	/**
@@ -67,9 +81,7 @@ class Talk {
 	 */
 	function __construct(array $data) {
 		foreach ($data as $key => $value) {
-			if (method_exists($this, 'set' . $key)) {
-				$this->{'set' . $key}($value);
-			} elseif (property_exists($this, '_' . $key)) {
+			if (property_exists($this, '_' . $key)) {
 				$this->{'_' . $key} = $value;
 			}
 		}
@@ -91,6 +103,18 @@ class Talk {
 	 */
 	function getOwnerID() {
 		return $this->_owner_id;
+	}
+	
+	function getOwnerName() {
+		return $this->_owner_name;
+	}
+	
+	function setOwnerName($name) {
+		$this->_owner_name = $name;
+	}
+	
+	function hasOwnerName() {
+		return !empty($this->_owner_name);
 	}
 
 	/**
@@ -165,6 +189,16 @@ class Talk {
 		$this->_remark = $remark;
 	}
 	
+	function getTalkOwner() {
+		return $this->_talk_owner;
+	}
 	
+	function setTalkOwner(UserEntity $user) {
+		$this->_talk_owner = $user;
+	}
+	
+	function hasTalkOwner() {
+		return $this->_talk_owner !== null;
+	}
 	
 }

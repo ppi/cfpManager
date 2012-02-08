@@ -52,8 +52,40 @@ class Manage extends Application {
 		
 	}
 
-	function createuser() {
+	function createuser()
+	{
 		
+		$errors = array();
+		if(!$this->is('post')) {
+			return $this->render('user/signup', compact('errors'));
+		}
+		
+		$post = $this->post();
+		$requiredKeys = array('userName', 'email', 'firstName', 'lastName', 'password');
+		
+		foreach($requiredKeys as $field) {
+			if(!isset($post[$field]) || empty($post[$field])) {
+				$errors[$field] = 'Field is required';
+			}
+		}
+		
+		if(empty($errors)) {
+		
+			$user = array(
+				'username'  => $post['userName'],
+				'email'     => $post['email'],
+				'firstName' => $post['firstName'],
+				'lastName'  => $post['lastName'],
+				'password'  => $post['password'],
+				'salt'      => base64_encode(openssl_random_pseudo_bytes(16))
+			);
+			
+			$userStorage = $this->getUserStorage();
+			$newUserID = $userStorage->create($user, $this->getConfig()->auth->salt);
+			$this->redirect('user/login');
+		}
+		
+		$this->render('user/signup', compact('errors'));
 	}
 	
 	function edituser() {
@@ -165,6 +197,7 @@ class Manage extends Application {
 					$errors[$field] = 'Field is required';
 				}
 			}
+
 			if(empty($errors)) {
 				$talkID = $this->getTalkStorage()->create(array(
 					'title'      => $post['talkTitle'],
@@ -179,9 +212,11 @@ class Manage extends Application {
 			}
 		}
 		
-		$talks             = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
-		$subPage           = 'talks/create';
-		$section           = 'talks';
+		$talks    = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
+		$subPage  = 'talks/create';
+		$section  = 'talks';
+		
+		$this->addCSS('manage/talk');
 		$this->render('manage/index', compact('talks', 'subPage', 'section'));
 	}
 	
@@ -200,6 +235,7 @@ class Manage extends Application {
 			$this->setFlash('Invalid Talk ID');
 			$this->redirect('');
 		}
+		
 		$talk = new \App\Entity\Talk($talk);
 		
 		// -- Talk Owner --
@@ -219,10 +255,83 @@ class Manage extends Application {
 	
 	function edittalk() {
 		
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+		if(empty($talkID)) {
+			$this->setFlash('Invalid Talk ID');
+			$this->redirect('');
+		}
+		
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
+		$talk = $this->getTalkStorage()->getTalkFromID($talkID);
+		
+		// -- Save the form --
+		if($this->is('post')) {
+
+			$post = $this->post();
+			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
+			$errors = array();
+			foreach($requiredKeys as $field) {
+				if(!isset($post[$field]) || empty($post[$field])) {
+					$errors[$field] = 'Field is required';
+				}
+			}
+			if(empty($errors)) {
+				$this->getTalkStorage()->update(array(
+					'title'      => $post['talkTitle'],
+					'slides_url' => $post['talkSlidesUrl'],
+					'duration'   => $post['talkDuration'],
+					'level'      => $post['talkLevel'],
+					'abstract'   => $post['talkAbstract'],
+					'remark'     => $post['talkRemark'],
+					'owner_id'   => $this->getUser()->getID()
+					
+				), array('id' => $talk->getID()));
+
+				$this->redirect('manage/talks/view/' . $talkID);
+			}
+		}
+		
+		// -- Rendering --
+		$section = 'talks';
+		$subPage = 'talks/edit';
+		
+		$this->addCSS('manage/talk');
+		$this->render('manage/index', compact('talk', 'section', 'subPage'));
+		
 	}
 	
 	function deletetalk() {
 		
+		// -- Params --
+		$talkID = $this->get(__FUNCTION__);
+
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
+		$ts = $this->getTalkStorage();
+
+		// -- Get the talk --
+		$talk = $ts->getTalkFromID($talkID);
+		
+		$ts->delete(array('id' => $talk->getID()));
+		
+		$this->setFlash('Talk successfully deleted');
+		$this->redirect('manage/talks');
 	}
 	
 //	function 

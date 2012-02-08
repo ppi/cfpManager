@@ -49,7 +49,30 @@ class Talk extends \PPI\DataSource\ActiveQuery {
 	}
 	
 	function getTalkFromID($talkID) {
-		return new TalkEntity($this->find($talkID));
+		
+		$talk = $this->find($talkID);
+		if(empty($talk)) {
+			throw new \Exception('Talk Not Found');
+		}
+		
+		return new TalkEntity($talk);
+	}
+	
+	function getAllForVotes() {
+		
+		$talks = array();
+		$rows = $this->_conn->createQueryBuilder()
+			->select("t.*, CONCAT(u.firstName, ' ', u.lastName) as owner_name")
+			->from($this->_meta['table'], 't')
+			->leftJoin('t', 'user', 'u', 't.owner_id = u.id')
+			->orderBy('t.id', 'ASC')
+			->execute()
+			->fetchAll($this->_meta['fetchmode']);
+		
+		foreach($rows as $row) {
+			$talks[] = new TalkEntity($row);
+		}
+		return $talks;
 	}
 	
 	function remove($talkID) {

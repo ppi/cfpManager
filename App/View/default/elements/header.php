@@ -15,6 +15,9 @@
 				<?php if($isLoggedIn && $authUser->isAdmin()): ?>
 				<li class="<?=$request['controller'] == 'manage' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>manage" title="Manage">Manage</a></li>
 				<?php endif; ?>
+				<?php if($isLoggedIn && $authUser->canVote()): ?>
+				<li class="<?=$request['controller'] == 'vote' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>vote" title="Vote">Vote</a></li>
+				<?php endif; ?>
 			</ul>
 			
 			<ul class="nav pull-right">

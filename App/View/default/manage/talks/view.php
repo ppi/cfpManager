@@ -12,8 +12,13 @@
 		<?php endif ;?>
 		
 		<?php if($talk->hasLevel()): ?>
-		<dt>Website</dt>
+		<dt>Level</dt>
 		<dd><?=$helper->escape($talk->getLevel()); ?></dd>
+		<?php endif ;?>
+		
+		<?php if($talk->hasSlidesUrl()): ?>
+		<dt>Slides Url</dt>
+		<dd><?=$helper->escape($talk->getSlidesUrl()); ?></dd>
 		<?php endif ;?>
 		
 	</dl>
