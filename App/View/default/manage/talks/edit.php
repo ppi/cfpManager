@@ -2,7 +2,7 @@
 		
 	<form class="form-horizontal" style="margin-bottom: 0;" action="" method="post" id="manage-form">
 		<fieldset>
-			<legend>Create Your Talk</legend>
+			<legend>Edit Your Talk</legend>
 			<div class="control-group">
 				<label class="control-label" for="talkTitle">Title</label>
 				<div class="controls">
