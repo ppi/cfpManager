@@ -7,19 +7,17 @@
 				<label class="control-label" for="talkTitle">Title</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="talkTitle" name="talkTitle" value="<?=$helper->escape($talk->getTitle()); ?>">
+					<span class="help-inline"></span>
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="talkDur30">Duration (mins)</label>
 				<div class="controls">
-					
 					<?php foreach(array('30', '45', '60') as $val): ?>
-					
 					<label class="radio inline">
 						<input type="radio" name="talkDuration" id="talkDur<?=$val; ?>" value="<?=$val; ?>" <?= $talk->getDuration() == $val ? 'checked' : ''; ?>><?=$val; ?>
 					</label>
-
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -32,6 +30,7 @@
 					
 					<label class="radio inline">
 						<input type="radio" name="talkLevel" id="talkLevel<?=$val; ?>" value="<?=$val; ?>" <?= $talk->getLevel() == $val ? 'checked' : ''; ?>><?=$val; ?>
+						<span class="help-inline"></span>
 					</label>
 
 					<?php endforeach; ?>
@@ -42,6 +41,7 @@
 				<label class="control-label" for="talkSlidesUrl">Slides Url</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="talkSlidesUrl" name="talkSlidesUrl" value="<?=$helper->escape($talk->getSlidesUrl()); ?>">
+					<span rel="talkSlidesUrl" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -51,6 +51,7 @@
 				<label class="control-label" for="talkAbstract">Abstract</label>
 				<div class="controls">
 					<textarea class="input-xlarge validate[required]" id="talkAbstract" name="talkAbstract"><?=$helper->escape($talk->getAbstract()); ?></textarea>
+					<span rel="talkSlidesUrl" class="help-inline"></span>
 				</div>
 			</div>
 			

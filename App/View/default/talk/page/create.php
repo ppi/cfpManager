@@ -7,6 +7,7 @@
 				<label class="control-label" for="talkTitle">Title</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="talkTitle" name="talkTitle">
+					<span rel="talkTitle" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -36,6 +37,7 @@
 				<label class="control-label" for="talkSlidesUrl">Slides Url</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="talkSlidesUrl" name="talkSlidesUrl">
+					<span rel="talkSlidesUrl" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -45,6 +47,7 @@
 				<label class="control-label" for="talkAbstract">Abstract</label>
 				<div class="controls">
 					<textarea class="input-xlarge validate[required]" id="talkAbstract" name="talkAbstract"></textarea>
+					<span rel="talkAbstract" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -52,6 +55,7 @@
 				<label class="control-label" for="talkRemark">Remarks</label>
 				<div class="controls">
 					<textarea class="input-xlarge" id="talkRemark" name="talkRemark"></textarea>
+					<span rel="talkRemark" class="help-inline"></span>
 				</div>
 			</div>
 			

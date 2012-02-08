@@ -7,6 +7,7 @@
 				<label class="control-label" for="currentPassword">Current Password</label>
 				<div class="controls">
 					<input type="password" class="input-xlarge validate[required]" id="currentPassword" name="currentPassword">
+					<span rel="currentPassword" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -16,6 +17,7 @@
 				<label class="control-label" for="password">New Password</label>
 				<div class="controls">
 					<input type="password" class="input-xlarge validate[required]" id="password" name="password">
+					<span rel="password" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -23,6 +25,7 @@
 				<label class="control-label" for="confirmPassword">Confirm New Password</label>
 				<div class="controls">
 					<input type="password" class="input-xlarge validate[required,equals[password]]" id="confirmPassword" name="confirmPassword">
+					<span rel="confirmPassword" class="help-inline"></span>
 				</div>
 			</div>
 			

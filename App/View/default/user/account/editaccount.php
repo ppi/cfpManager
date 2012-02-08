@@ -7,7 +7,7 @@
 				<label class="control-label" for="firstName">First Name</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="firstName" name="firstName" value="<?=$userAccount->getFirstName(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<span rel="firstName" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -15,7 +15,7 @@
 				<label class="control-label" for="lastName">Last Name</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="lastName" name="lastName" value="<?=$userAccount->getLastName(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<span rel="lastName" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -23,7 +23,7 @@
 				<label class="control-label" for="userName">Username</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required]" id="userName" name="userName" value="<?=$userAccount->getUsername(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<span rel="userName" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -31,7 +31,7 @@
 				<label class="control-label" for="emailAddress">Email Address</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge validate[required, custom[email]]" id="emailAddress" name="email" value="<?=$userAccount->getEmail(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<span rel="emailAddress" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -40,7 +40,8 @@
 			<div class="control-group">
 				<label class="control-label" for="jobTitle">Job Title</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="jobTitle" name="jobTitle" value="<?=$userAccount->getJobTitle(); ?>">
+					<input type="text" class="input-xlarge]" id="jobTitle" name="jobTitle" value="<?=$userAccount->getJobTitle(); ?>">
+					<span rel="jobTitle" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -48,16 +49,16 @@
 			<div class="control-group">
 				<label class="control-label" for="website">Website</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="website" name="website" value="<?=$userAccount->getWebsite(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<input type="text" class="input-xlarge" id="website" name="website" value="<?=$userAccount->getWebsite(); ?>">
+					<span rel="website" class="help-inline"></span>
 				</div>
 			</div>
 			
 			<div class="control-group">
 				<label class="control-label" for="twitterHandle">Twitter Handle</label>
 				<div class="controls">
-					<input type="text" class="input-xlarge validate[required]" id="twitterHandle" name="twitterHandle" value="<?=$userAccount->getTwitterHandle(); ?>">
-	<!--				<p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>-->
+					<input type="text" class="input-xlarge" id="twitterHandle" name="twitterHandle" value="<?=$userAccount->getTwitterHandle(); ?>">
+					<span rel="twitterHandle" class="help-inline"></span>
 				</div>
 			</div>
 			
@@ -67,6 +68,7 @@
 				<label class="control-label" for="textarea" for="biography">Biography</label>
 				<div class="controls">
 					<textarea class="input-xlarge" id="textarea" rows="3" id="biography" name="bio"><?=$userAccount->getBio(); ?></textarea>
+					<span rel="biography" class="help-inline"></span>
 				</div>
 			</div>
 			

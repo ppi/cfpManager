@@ -124,3 +124,28 @@ legend img {
 	background: url(../images/generic/block-end-right.gif) bottom left no-repeat;
 	float: right;
 }
+
+/* -- Form Validation Cleanup -- */
+.formError {
+	display: none;
+}
+
+/* --- Voting Sortable Stuf --- */
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+
+#sortable .handle {
+	background: url(../images/generic/vote-move.png) no-repeat;
+	width: 16px;
+	display: block;
+	float: left;
+	margin-right: 6px;
+	margin-top: 3px;
+	height: 16px;
+}
+
+#sortable li p {
+	margin-top: 2px;
+}
