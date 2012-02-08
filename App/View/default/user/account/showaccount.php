@@ -1,7 +1,7 @@
 <div class="well">
 	<h2><?= $helper->escape($userAccount->getFullName()); ?></h2>
 	<?php if($userAccount->hasJobTitle()): ?>
-	<p><b><?= $helper->escape($userAccount->getJobTitle()); ?></b></p>
+	<p><b><?= $helper->escape($userAccount->getJobTitle()); ?> at <?=$helper->escape($userAccount->getCompanyName()); ?></b></p>
 	<?php endif; ?>
 	
 	<dl class="user-info">

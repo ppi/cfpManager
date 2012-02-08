@@ -130,6 +130,7 @@ class User extends Application {
 					'twitter_handle' => $post['twitterHandle'],
 					'website'        => $post['website'],
 					'job_title'      => $post['jobTitle'],
+					'company_name'   => $post['companyName'],
 					'bio'            => $post['bio'],
 					'country'        => $post['country'],
 					

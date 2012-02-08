@@ -14,6 +14,8 @@ class User {
 	protected $_job_title = null;
 	protected $_bio = null;
 	
+	protected $_company_name = null;
+	
 	/**
 	 * Are they an admin
 	 * 
@@ -41,7 +43,7 @@ class User {
 				$this->{'_' . $key} = $value;
 			}
 		}
-	}
+	}	
 	
 	function getID() {
 		return $this->_id;
@@ -105,6 +107,14 @@ class User {
 	
 	function hasJobTitle() {
 		return !empty($this->_job_title);
+	}
+	
+	function getCompanyName() {
+		return $this->_company_name;
+	}
+	
+	function hasCompanyName() {
+		return !empty($this->_company_name);
 	}
 	
 	function getBio() {
