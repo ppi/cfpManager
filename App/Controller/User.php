@@ -131,9 +131,7 @@ class User extends Application {
 					'website'        => $post['website'],
 					'job_title'      => $post['jobTitle'],
 					'company_name'   => $post['companyName'],
-					'bio'            => $post['bio'],
-					'country'        => $post['country'],
-					
+					'bio'            => $post['bio']					
 				), array('id' => $this->getUser()->getID()));
 				
 				$this->setFlash('Account Updated');
