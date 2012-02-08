@@ -90,6 +90,7 @@ class Talk extends Application {
 		
 		$talk = $this->getTalkStorage()->getTalkFromID($talkID);
 		if($talk->getOwnerID() != $this->getUser()->getID()) {
+			die('permission');
 			$this->setFlash('You dont have permissions to edit this talk');
 			$this->redirect('');
 		}
@@ -99,13 +100,12 @@ class Talk extends Application {
 
 			$post = $this->post();
 			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
-			
+			$errors = array();
 			foreach($requiredKeys as $field) {
 				if(!isset($post[$field]) || empty($post[$field])) {
 					$errors[$field] = 'Field is required';
 				}
 			}
-			
 			if(empty($errors)) {
 				$this->getTalkStorage()->update(array(
 					'title'      => $post['talkTitle'],
@@ -115,7 +115,7 @@ class Talk extends Application {
 					'abstract'   => $post['talkAbstract'],
 					'remark'     => $post['talkRemark'],
 					'owner_id'   => $this->getUser()->getID()
-				), array('id' => $talk->getOwnerID()));
+				), array('id' => $talk->getID()));
 				$this->redirect('talk/view/' . $talkID);
 			}
 		}
