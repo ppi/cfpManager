@@ -18,7 +18,7 @@ class Talk extends Application {
 		if($this->is('post')) {
 			
 			$post = $this->post();
-			$requiredKeys = array('talkTitle', 'talkSlidesUrl', 'talkDuration', 'talkLevel', 'talkAbstract');
+			$requiredKeys = array('talkTitle', 'talkDuration', 'talkLevel', 'talkAbstract');
 			
 			foreach($requiredKeys as $field) {
 				if(!isset($post[$field]) || empty($post[$field])) {
