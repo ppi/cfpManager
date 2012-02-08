@@ -22,7 +22,7 @@
 					<span rel="password" class="help-inline"></span>
 				</div>
 			</div>
-			<p><a href="<?=$baseUrl;?>user/forgotpw">Forgotten Password?</a></p>
+<!--			<p><a href="--><?//=$baseUrl;?><!--user/forgotpw">Forgotten Password?</a></p>-->
 		</fieldset>
 			
 		<div class="actions">
