@@ -2,19 +2,47 @@
 namespace App\Entity;
 class User {
 	
+	/**
+	 * The User ID
+	 * 
+	 * @var null
+	 */
 	protected $_id = null;
+	
+	/**
+	 * The Username
+	 * 
+	 * @var null
+	 */
 	protected $_username = null;
+	
+	/**
+	 * The First Name
+	 * 
+	 * @var null
+	 */
 	protected $_firstName = null;
+	
+	/**
+	 * The Last Name
+	 * 
+	 * @var null
+	 */
 	protected $_lastName = null;
+	
+	/**
+	 * The Email Address
+	 * 
+	 * @var null
+	 */
 	protected $_email = null;
-	protected $_country = null;
 	
-	protected $_twitter_handle = null;
-	protected $_website = null;
-	protected $_job_title = null;
-	protected $_bio = null;
-	
-	protected $_company_name = null;
+	/**
+	 * The Users Salt
+	 * 
+	 * @var null
+	 */
+	protected $_salt = null;
 	
 	/**
 	 * Are they an admin
@@ -29,6 +57,16 @@ class User {
 	 * @var null
 	 */
 	protected $_can_vote = null;
+	
+	
+	protected $_country = null;
+	
+	protected $_twitter_handle = null;
+	protected $_website = null;
+	protected $_job_title = null;
+	protected $_bio = null;
+	
+	protected $_company_name = null;
 	
 	/**
 	 * Talks

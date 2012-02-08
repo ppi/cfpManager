@@ -1,62 +1,9 @@
 <?php
 namespace App\Entity;
-class AuthUser {
+use App\Entity\User as UserEntity;
+class AuthUser extends UserEntity {
 
-	/**
-	 * The User ID
-	 * 
-	 * @var null
-	 */
-	protected $_id = null;
-	
-	/**
-	 * The Username
-	 * 
-	 * @var null
-	 */
-	protected $_username = null;
-	
-	/**
-	 * The First Name
-	 * 
-	 * @var null
-	 */
-	protected $_firstName = null;
-	
-	/**
-	 * The Last Name
-	 * 
-	 * @var null
-	 */
-	protected $_lastName = null;
-	
-	/**
-	 * The Email Address
-	 * 
-	 * @var null
-	 */
-	protected $_email = null;
-	
-	/**
-	 * The Users Salt
-	 * 
-	 * @var null
-	 */
-	protected $_salt = null;
-	
-	/**
-	 * Are they an admin
-	 * 
-	 * @var null
-	 */
-	protected $_is_admin = null;
-	
-	/**
-	 * Can Vote
-	 * 
-	 * @var null
-	 */
-	protected $_can_vote = null;
+
 	
 	/**
 	 * @param array $data

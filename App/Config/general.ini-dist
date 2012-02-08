@@ -2,15 +2,19 @@
 
 auth.salt = "jDbU&er*az"
 
+email.fromEmail = "cfp@ppi.io"
+email.fromName = "CFP Mailer"
+email.adminEmail = "info@ppi.io"
+email.adminName = "CFP Administrator"
+
 system.base_url = http://localhost/cfp-ppi/
+system.autoloadLibs = swift
 
 talk.levels[] = beginner
 talk.levels[] = intermediate
 talk.levels[] = advanced
 
-talk.duration[] = "30 minutes"
-talk.duration[] = "45 minutes"
-talk.duration[] = "60 minutes"
+talk.duration[] = 60
 
 layout.view_theme = default
 layout.renderer = php

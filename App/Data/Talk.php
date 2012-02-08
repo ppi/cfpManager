@@ -1,6 +1,8 @@
 <?php
 namespace App\Data;
 use App\Entity\Talk as TalkEntity;
+use App\Entity\Content as ContentEntity;
+use App\Entity\User as UserEntity;
 
 class Talk extends \PPI\DataSource\ActiveQuery {
 	
@@ -11,8 +13,35 @@ class Talk extends \PPI\DataSource\ActiveQuery {
 		'fetchmode' => \PDO::FETCH_ASSOC
 	);
 	
-	function create($data) {
-		return $this->insert($data);
+	function create(array $data, ContentEntity $emailTemplate, UserEntity $user, $config) {
+		
+		$talkID = $this->insert($data);
+
+		// -- Content Preparation --
+		$search = array();
+		$data['user_name'] = $user->getFullName();
+		
+		foreach(array('slides_url', 'remark') as $field) {
+			if(empty($data[$field])) {
+				$data[$field] = 'Not Supplied';
+			}
+		}
+		
+		foreach($data as $field => $val) {
+			$search['[%' . $field . '%]'] = $val;
+		}
+		
+		$content = str_replace(array_keys($search), array_values($search), $emailTemplate->getContent());
+
+		// -- Send the email --
+		$subject = 'New Talk Created';
+		$mailer = new \Swift_Mailer(new \Swift_MailTransport());
+		$message = \Swift_Message::newInstance($subject, $content)
+			->setFrom(array($config['fromEmail'] => $config['fromName']))
+			->setTo(array($config['adminEmail'] => $config['adminName']));
+		
+		$result = $mailer->send($message);
+		return $talkID;
 	}
 	
 	/**

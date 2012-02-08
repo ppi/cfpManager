@@ -95,7 +95,6 @@ class User extends Application {
 			$user = $this->getUserStorage()->findByEmail($this->getUser()->getEmail());
 			$viewingOwnProfile = true;
 		}
-		
 		if(empty($user)) {
 			$this->setFlash('Invalid Username');
 			$this->redirect('');

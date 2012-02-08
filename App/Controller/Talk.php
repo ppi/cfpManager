@@ -26,15 +26,21 @@ class Talk extends Application {
 				}
 			}
 			if(empty($errors)) {
+
 				$talkID = $this->getTalkStorage()->create(array(
-					'title'      => $post['talkTitle'],
-					'slides_url' => $post['talkSlidesUrl'],
-					'duration'   => $post['talkDuration'],
-					'level'      => $post['talkLevel'],
-					'abstract'   => $post['talkAbstract'],
-					'remark'     => $post['talkRemark'],
-					'owner_id'   => $this->getUser()->getID()
-				));
+						'title'      => $post['talkTitle'],
+						'slides_url' => $post['talkSlidesUrl'],
+						'duration'   => $post['talkDuration'],
+						'level'      => $post['talkLevel'],
+						'abstract'   => $post['talkAbstract'],
+						'remark'     => $post['talkRemark'],
+						'owner_id'   => $this->getUser()->getID()
+					), 
+					$this->getContentStorage()->getContentByTitle('talk_email_template'),
+					$this->getUser(),
+					$this->getConfig()->email->toArray()
+				);
+				
 				$this->redirect('talk/view/' . $talkID);
 			}
 		}
@@ -169,6 +175,5 @@ class Talk extends Application {
 		$subPage = 'list';
 		$this->render('talk/my', compact('talks', 'viewingOwnProfile', 'subPage'));
 	}
-	
 	
 }
