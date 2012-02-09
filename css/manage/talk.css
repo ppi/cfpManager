@@ -7,3 +7,7 @@
 	height: 200px;
 	width: 450px;
 }
+
+#manage-talks .talk-title {
+	width: 400px;
+}

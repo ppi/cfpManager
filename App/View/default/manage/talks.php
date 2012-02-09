@@ -18,7 +18,7 @@
 		<tbody>
 		<?php foreach($talks as $talk): ?>
 			<tr>
-				<td><?=$helper->escape($talk->getTitle()); ?></td>
+				<td class="talk-title"><?=$helper->escape($talk->getTitle()); ?></td>
 				<td><?=$helper->escape($talk->getDuration()); ?></td>
 				<td><?=$helper->escape($talk->getLevel()); ?></td>
 				<td><a target="_blank" href="<?=$helper->escape($talk->getSlidesUrl()); ?>">Link</a></td>
