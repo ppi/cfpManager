@@ -192,6 +192,7 @@ class Manage extends Application {
 		
 		$subPage = 'talks';
 		$section = 'talks';
+		$this->addCSS('manage/talk');
 		$this->render('manage/index', compact('talks', 'subPage', 'errors', 'section'));
 	}
 	
