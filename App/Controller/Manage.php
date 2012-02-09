@@ -302,9 +302,7 @@ class Manage extends Application {
 					'duration'   => $post['talkDuration'],
 					'level'      => $post['talkLevel'],
 					'abstract'   => $post['talkAbstract'],
-					'remark'     => $post['talkRemark'],
-					'owner_id'   => $this->getUser()->getID()
-					
+					'remark'     => $post['talkRemark']					
 				), array('id' => $talk->getID()));
 
 				$this->redirect('manage/talks/view/' . $talkID);
