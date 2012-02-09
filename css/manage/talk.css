@@ -8,6 +8,9 @@
 	width: 450px;
 }
 
+#manage-talks .td-actions {
+	width: 76px;
+}
 #manage-talks .talk-title {
 	width: 400px;
 }
