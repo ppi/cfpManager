@@ -22,7 +22,7 @@
 				<td><?=$helper->escape($talk->getDuration()); ?></td>
 				<td><?=$helper->escape($talk->getLevel()); ?></td>
 				<td><a target="_blank" href="<?=$helper->escape($talk->getSlidesUrl()); ?>">Link</a></td>
-				<td>
+				<td class="td-actions">
 					<div class="btn-group actions-button">
 						<a class="btn btn-primary view-button" href="<?=$baseUrl;?>manage/talks/view/<?=$talk->getID(); ?>"><i class="icon white user"></i> View</a>
 						<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
