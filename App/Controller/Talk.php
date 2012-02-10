@@ -3,10 +3,12 @@ namespace App\Controller;
 class Talk extends Application {
 	
 	function preDispatch() {
+		
+		$this->loginCheck();
+		
 		$this->addCSS('talk/form', 'user/account');
 		$this->addJS('libs/jquery-validationEngine-en', 'libs/jquery-validationEngine', 'app/talk/index');
 	}
-	
 	
 	function index() {
 		
@@ -84,7 +86,7 @@ class Talk extends Application {
 	}
 	
 	function edit() {
-
+		
 		// -- Params --
 		$talkID = $this->get(__FUNCTION__);
 		if(empty($talkID)) {
@@ -142,9 +144,6 @@ class Talk extends Application {
 		// -- Params --
 		$talkID = $this->get(__FUNCTION__);
 
-		// -- Auth --
-		$this->loginCheck();
-		
 		$ts = $this->getTalkStorage();
 
 		// -- Get the talk --
@@ -167,8 +166,6 @@ class Talk extends Application {
 	 * View all the talks belonging to the current user
 	 */
 	function my() {
-		
-		$this->loginCheck();
 		
 		$talks = $this->getTalkStorage()->getByOwnerID($this->getUser()->getID());
 		$viewingOwnProfile = true;
