@@ -1,8 +1,16 @@
-<div class="well">
+<div class="well view-talk">
 	<h2><?= $helper->escape($user->getFullName()); ?></h2>
 	<?php if($user->hasJobTitle()): ?>
 	<p><b><?= $helper->escape($user->getJobTitle()); ?></b></p>
 	<?php endif; ?>
+	
+	<div class="btn-group actions-button">
+		<a class="btn btn-primary view-button" href="<?=$baseUrl;?>manage/users/edit/<?=$user->getID(); ?>"><i class="icon white user"></i> Edit</a>
+		<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="<?=$baseUrl;?>manage/users/delete/<?=$user->getID(); ?>" onclick="return confirm('Are you sure? No going back now!');"><i class="icon-trash"></i> Delete</a></li>
+		</ul>
+	</div>
 	
 	<dl class="user-info">
 		
