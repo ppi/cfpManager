@@ -70,7 +70,7 @@ class Talk extends Application {
 			$this->redirect('');
 		}
 		$talk = new \App\Entity\Talk($talk);
-		
+
 		// -- Talk Owner --
 		$talkOwner = new \App\Entity\User($this->getUserStorage()->find($talk->getOwnerID()));
 		if(empty($talkOwner)) {
@@ -81,6 +81,7 @@ class Talk extends Application {
 		// -- Rendering --
 		$viewingOwnProfile = $this->isLoggedIn() && $talk->getOwnerID() == $this->getUser()->getID();
 		$subPage           = 'view';
+		$this->addCSS('talk/view');
 		$this->render('talk/my', compact('talkOwner', 'talk', 'viewingOwnProfile', 'subPage'));
 		
 	}

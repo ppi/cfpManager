@@ -1,5 +1,15 @@
-<div class="well">
+<div class="well view-talk">
 	<h1><?= $helper->escape($talk->getTitle()); ?></h1>
+	
+	<div class="btn-group actions-button">
+		<a class="btn btn-primary view-button" href="<?=$baseUrl;?>talk/edit/<?=$talk->getID(); ?>"><i class="icon white user"></i> Edit</a>
+		<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			<li><a href="<?=$baseUrl;?>talk/delete/<?=$talk->getID(); ?>" onclick="return confirm('Are you sure? No going back now!');"><i class="icon-trash"></i> Delete</a></li>
+		</ul>
+	</div>
+	
+	
 	
 	<dl class="user-info">
 		

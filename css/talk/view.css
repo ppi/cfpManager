@@ -1,0 +1,10 @@
+.view-talk .actions-button {
+	position: absolute;
+	top: 20px;
+	width: 80px;
+	right: 20px;
+}
+
+.view-talk {
+	position: relative;
+}
