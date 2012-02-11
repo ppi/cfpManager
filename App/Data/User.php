@@ -88,6 +88,18 @@ class User extends \PPI\DataSource\ActiveQuery {
 			->fetch($this->_meta['fetchmode']);
 	}
 	
+	function existsByEmail($email) {
+		$row = $this->_conn->createQueryBuilder()
+			->select('count(id) as total')
+			->from($this->_meta['table'], 'u')
+			->andWhere('u.email = :email')
+			->setParameter(':email', $email)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+		
+		return $row['total'] > 0;
+	}
+	
 	function findByUsername($username) {
 		return $this->_conn->createQueryBuilder()
 			->select('u.*')
