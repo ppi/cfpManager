@@ -3,6 +3,16 @@ namespace App\Controller;
 class Manage extends Application {
 
 	function preDispatch() {
+		
+		// -- Need to be authed --
+		$this->loginCheck();
+		
+		// -- Permissions --
+		if(!$this->getUser()->isAdmin()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
 		$this->addCSS('user/talk', 'user/account', 'manage/listing');
 		$this->addJS('libs/jquery-validationEngine-en', 'libs/jquery-validationEngine', 'app/manage/form');
 	}
@@ -107,14 +117,6 @@ class Manage extends Application {
 			$this->redirect('manage/users');
 		}
 		
-		$this->loginCheck();
-
-		// -- Permissions
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		// -- Save --
 		if($this->is('post')) {
 			return $this->edituser_save($userID);
@@ -134,12 +136,6 @@ class Manage extends Application {
 	}
 	
 	function deleteuser() {
-
-		$this->loginCheck();
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
 		
 		$userID = $this->get(__FUNCTION__);
 		$us     = $this->getUserStorage();
@@ -180,13 +176,6 @@ class Manage extends Application {
 
 	function talks() {
 
-		// -- Permissions --
-		$this->loginCheck();
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		// -- Entity Stuff --
 		$talks = $this->getTalkStorage()->getAllWithSpeakerName();
 		
@@ -279,15 +268,6 @@ class Manage extends Application {
 			$this->redirect('');
 		}
 		
-		// -- Need to be authed --
-		$this->loginCheck();
-		
-		// -- Permissions --
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		$talk = $this->getTalkStorage()->getTalkFromID($talkID);
 		
 		// -- Save the form --
@@ -329,15 +309,6 @@ class Manage extends Application {
 		
 		// -- Params --
 		$talkID = $this->get(__FUNCTION__);
-
-		// -- Need to be authed --
-		$this->loginCheck();
-		
-		// -- Permissions --
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
 		
 		$ts = $this->getTalkStorage();
 
@@ -352,13 +323,6 @@ class Manage extends Application {
 	
 	function content() {
 		
-		// -- Permissions --
-		$this->loginCheck();
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		// -- Entity Stuff --
 		$allContent = $this->getContentStorage()->getAll();
 		
@@ -369,16 +333,6 @@ class Manage extends Application {
 	}
 
 	function createcontent() {
-
-		// -- Need to be authed --
-		$this->loginCheck();
-		
-		// -- Permissions --
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		
 		$errors = array();
 		if($this->is('post')) {
@@ -419,15 +373,6 @@ class Manage extends Application {
 			$this->redirect('');
 		}
 		
-		// -- Need to be authed --
-		$this->loginCheck();
-		
-		// -- Permissions --
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
-		
 		$errors = array();
 		if($this->is('post')) {
 			
@@ -462,15 +407,6 @@ class Manage extends Application {
 		
 		// -- Params --
 		$contentID = $this->get(__FUNCTION__);
-
-		// -- Need to be authed --
-		$this->loginCheck();
-		
-		// -- Permissions --
-		if(!$this->getUser()->isAdmin()) {
-			$this->setFlash('Permission Denied');
-			$this->redirect('');
-		}
 		
 		$cs = $this->getContentStorage();
 
@@ -485,6 +421,7 @@ class Manage extends Application {
 	}
 	
 	function viewcontent() {
+		
 		// -- Params --
 		$contentID = $this->get(__FUNCTION__);
 		if(empty($contentID)) {

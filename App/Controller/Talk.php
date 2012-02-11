@@ -70,6 +70,11 @@ class Talk extends Application {
 			$this->redirect('');
 		}
 		$talk = new \App\Entity\Talk($talk);
+		
+		if($talk->getOwnerID() != $this->getUser()->getID()) {
+			$this->setFlash('Permisson Denied');
+			$this->redirect('');
+		}
 
 		// -- Talk Owner --
 		$talkOwner = new \App\Entity\User($this->getUserStorage()->find($talk->getOwnerID()));
