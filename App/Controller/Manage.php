@@ -188,7 +188,7 @@ class Manage extends Application {
 		}
 		
 		// -- Entity Stuff --
-		$talks = $this->getTalkStorage()->getAll();
+		$talks = $this->getTalkStorage()->getAllWithSpeakerName();
 		
 		$subPage = 'talks';
 		$section = 'talks';
@@ -212,14 +212,17 @@ class Manage extends Application {
 
 			if(empty($errors)) {
 				$talkID = $this->getTalkStorage()->create(array(
-					'title'      => $post['talkTitle'],
-					'slides_url' => $post['talkSlidesUrl'],
-					'duration'   => $post['talkDuration'],
-					'level'      => $post['talkLevel'],
-					'abstract'   => $post['talkAbstract'],
-					'remark'     => $post['talkRemark'],
-					'owner_id'   => $this->getUser()->getID()
-				));
+						'title'      => $post['talkTitle'],
+						'slides_url' => $post['talkSlidesUrl'],
+						'duration'   => $post['talkDuration'],
+						'level'      => $post['talkLevel'],
+						'abstract'   => $post['talkAbstract'],
+						'remark'     => $post['talkRemark'],
+						'owner_id'   => $this->getUser()->getID()
+					),
+					$this->getContentStorage()->getContentByTitle('talk_email_template'),
+					$this->getUser(),
+					$this->getConfig()->email->toArray());
 				$this->redirect('manage/talks/view/' . $talkID);
 			}
 		}

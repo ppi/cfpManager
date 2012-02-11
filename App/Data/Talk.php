@@ -85,7 +85,7 @@ class Talk extends \PPI\DataSource\ActiveQuery {
 		return new TalkEntity($talk);
 	}
 	
-	function getAllForVotes() {
+	function getAllWithSpeakerName() {
 		
 		$talks = array();
 		$rows = $this->_conn->createQueryBuilder()
