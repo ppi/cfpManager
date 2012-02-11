@@ -11,7 +11,7 @@
 				<th>Title</th>
 				<th>Duration</th>
 				<th>Level</th>
-				<th>Slides Url</th>
+				<th>Speaker</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -21,7 +21,7 @@
 				<td class="talk-title"><?=$helper->escape($talk->getTitle()); ?></td>
 				<td><?=$helper->escape($talk->getDuration()); ?></td>
 				<td><?=$helper->escape($talk->getLevel()); ?></td>
-				<td><a target="_blank" href="<?=$helper->escape($talk->getSlidesUrl()); ?>">Link</a></td>
+				<td><?=$helper->escape($talk->getOwnerName()); ?></td>
 				<td class="td-actions">
 					<div class="btn-group actions-button">
 						<a class="btn btn-primary view-button" href="<?=$baseUrl;?>manage/talks/view/<?=$talk->getID(); ?>"><i class="icon white user"></i> View</a>
