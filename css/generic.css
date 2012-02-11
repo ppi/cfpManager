@@ -155,3 +155,9 @@ html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 	display: block;
 	margin-top: 5px;
 }
+
+/** -- Bootstrap Mods -- **/
+.actions-button  a.view-button,
+.actions-button a.view-button:visited {
+	color: white;
+}

@@ -11,8 +11,3 @@
 #talk-form  input[type="text"] {
 	width: 450px;
 }
-
-.actions-button  a.view-button,
-.actions-button a.view-button:visited {
-	color: white;
-}

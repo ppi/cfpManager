@@ -265,6 +265,8 @@ class Manage extends Application {
 		$viewingOwnProfile = $this->isLoggedIn() && $talk->getOwnerID() == $this->getUser()->getID();
 		$subPage           = 'talks/view';
 		$section           = 'talks';
+		
+		$this->addCSS('talk/view');
 		$this->render('manage/index', compact('talkOwner', 'talk', 'section', 'subPage'));
 	}
 	

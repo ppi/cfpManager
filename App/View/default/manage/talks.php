@@ -21,7 +21,7 @@
 				<td class="talk-title"><?=$helper->escape($talk->getTitle()); ?></td>
 				<td><?=$helper->escape($talk->getDuration()); ?></td>
 				<td><?=$helper->escape($talk->getLevel()); ?></td>
-				<td><?=$helper->escape($talk->getOwnerName()); ?></td>
+				<td><a href="<?=$baseUrl;?>manage/users/view/<?=$helper->escape($talk->getOwnerID()); ?>" title="<?=$helper->escape($talk->getOwnerName()); ?>"><?=$helper->escape($talk->getOwnerName()); ?></a></td>
 				<td class="td-actions">
 					<div class="btn-group actions-button">
 						<a class="btn btn-primary view-button" href="<?=$baseUrl;?>manage/talks/view/<?=$talk->getID(); ?>"><i class="icon white user"></i> View</a>

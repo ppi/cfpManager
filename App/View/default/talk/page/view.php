@@ -9,8 +9,6 @@
 		</ul>
 	</div>
 	
-	
-	
 	<dl class="user-info">
 		
 		<dt>Speaker</dt>
