@@ -12,13 +12,18 @@
 
 			<ul class="nav">
 				<li class="<?=$request['controller'] == 'home' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>">Home</a></li>
-				<?php if($isLoggedIn && $authUser->isAdmin()): ?>
-				<li class="<?=$request['controller'] == 'manage' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>manage" title="Manage">Manage</a></li>
-				<?php else: ?>
-				<li class="<?=$request['controller'] == 'talk' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>my/talks" title="My Talks">My Talks</a></li>
-				<?php endif; ?>
-				<?php if($isLoggedIn && $authUser->canVote()): ?>
-				<li class="<?=$request['controller'] == 'vote' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>vote" title="Vote">Vote</a></li>
+				<?php if($isLoggedIn): ?>
+			
+					<?php if($authUser->isAdmin()): ?>
+					<li class="<?=$request['controller'] == 'manage' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>manage" title="Manage">Manage</a></li>
+					<?php else: ?>
+					<li class="<?=$request['controller'] == 'talk' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>my/talks" title="My Talks">My Talks</a></li>
+					<?php endif; ?>
+				
+					<?php if($authUser->canVote()): ?>
+					<li class="<?=$request['controller'] == 'vote' ? 'active' : ''; ?>"><a href="<?=$baseUrl; ?>vote" title="Vote">Vote</a></li>
+					<?php endif; ?>
+				
 				<?php endif; ?>
 			</ul>
 			
