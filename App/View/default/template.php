@@ -22,5 +22,8 @@ endif;
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script>window.jQuery || document.write('<script src="<?= $baseUrl; ?>scripts/libs/jquery-1.7.1.min.js"><\/script>')</script>
 	<?php include($viewDir . 'framework/javascript.php'); ?>
+
+	<a href="http://github.com/ppi/cfpManager" target="_blank" title="Fork Me On GitHub"><img style="position: fixed; top: 40px; left: 0; border: 0;" src="<?=$baseUrl;?>images/generic/fork-github.png" alt="Fork me on GitHub"></a>
+
 </body>
 </html>
