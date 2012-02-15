@@ -6,6 +6,9 @@
 	
 	<dl class="user-info">
 		
+		<dt>Email</dt>
+		<dd><?=$helper->escape($userAccount->getEmail()); ?></dd>
+		
 		<?php if($userAccount->getCountry()): ?>
 		<dt>Country</dt>
 		<dd><?=$helper->escape($userAccount->getCountry()); ?></a></dd>
