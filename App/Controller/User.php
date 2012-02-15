@@ -100,6 +100,12 @@ class User extends Application {
 			$this->redirect('');
 		}
 		
+		// People can't view someone elses profile
+		if($this->getUser()->getID() != $user->getID()) {
+			$this->setFlash('Permission Denied');
+			$this->redirect('');
+		}
+		
 		$userAccount = new \App\Entity\User($user);
 		$subPage = 'showaccount';
 		$this->render('user/account', compact('userAccount', 'subPage', 'viewingOwnProfile'));
