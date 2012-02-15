@@ -123,6 +123,14 @@ class User extends \PPI\DataSource\ActiveQuery {
 		return new UserEntity($this->find($userID));
 	}
 	
+	function getByEmail($email) {
+		$row = $this->findByEmail($email);
+		if($row === false) {
+			throw new \Exception('User row by email does not exist');
+		}
+		return new UserEntity($row);
+	}
+	
 	function exists($userID) {
 		$row = $this->find($userID);
 		return !empty($row);
