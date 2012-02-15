@@ -55,7 +55,7 @@ class User extends Application {
 		
 		// Check if we are already logged in
 		if($this->isLoggedIn()) {
-			$this->redirect('myaccount');
+			$this->redirect('account');
 		}
 		
 		$errors = array();
@@ -86,27 +86,17 @@ class User extends Application {
 	
 	function showaccount() {
 
-		$username = $this->get('username', '');
-		$viewingOwnProfile = false;
-		if(!empty($username)) {
-			$user = $this->getUserStorage()->findByUsername($username);
-		} else {
-			$this->loginCheck();
-			$user = $this->getUserStorage()->findByEmail($this->getUser()->getEmail());
-			$viewingOwnProfile = true;
-		}
-		if(empty($user)) {
-			$this->setFlash('Invalid Username');
-			$this->redirect('');
-		}
+		$this->loginCheck();
 		
+		$viewingOwnProfile = true;
+		$userAccount = $this->getUserStorage()->getByEmail($this->getUser()->getEmail());
+
 		// People can't view someone elses profile
-		if($this->getUser()->getID() != $user->getID()) {
+		if($this->getUser()->getID() != $userAccount->getID()) {
 			$this->setFlash('Permission Denied');
 			$this->redirect('');
 		}
 		
-		$userAccount = new \App\Entity\User($user);
 		$subPage = 'showaccount';
 		$this->render('user/account', compact('userAccount', 'subPage', 'viewingOwnProfile'));
 	}
