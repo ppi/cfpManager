@@ -12,7 +12,7 @@
 	<dl class="user-info">
 		
 		<dt>Speaker</dt>
-		<dd><a href="<?=$baseUrl;?>manager/users/view/<?=$helper->escape($talkOwner->getID()); ?>" title="Click to see profile of: <?=$helper->escape($talkOwner->getFullName()); ?>"><?=$helper->escape($talkOwner->getFullName()); ?></a></dd>
+		<dd><a href="<?=$baseUrl;?>manage/users/view/<?=$helper->escape($talkOwner->getID()); ?>" title="Click to see profile of: <?=$helper->escape($talkOwner->getFullName()); ?>"><?=$helper->escape($talkOwner->getFullName()); ?></a></dd>
 		
 		<?php if($talk->hasDuration()): ?>
 		<dt>Duration</dt>
