@@ -1,7 +1,7 @@
 <div class="well view-talk">
 	<h2><?= $helper->escape($user->getFullName()); ?></h2>
 	<?php if($user->hasJobTitle()): ?>
-	<p><b><?= $helper->escape($user->getJobTitle()); ?></b></p>
+	<p><b><?= $helper->escape($user->getJobTitle()); ?> at <?=$helper->escape($user->getCompanyName()); ?></b></p>
 	<?php endif; ?>
 	
 	<div class="btn-group actions-button">
