@@ -135,5 +135,30 @@ class User extends \PPI\DataSource\ActiveQuery {
 		$row = $this->find($userID);
 		return !empty($row);
 	}
+
+	function fetchProviderId( $identifier ) {
+
+		$row = $this->_conn->createQueryBuilder()
+			->select('provider_id')
+			->from($this->_meta['table'], 'u')
+			->andWhere('u.provider_id = :provider_id')
+			->setParameter(':provider_id', $identifier)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+
+		return $row ? $row['provider_id'] : false;
+	}
+
+	function getID( $where ) {
+
+		$row = $this->_conn->createQueryBuilder()
+			->select('id')
+			->from($this->_meta['table'])
+			->andWhere($where)
+			->execute()
+			->fetch($this->_meta['fetchmode']);
+
+		return $row['id'];
+	}
 	
 }
