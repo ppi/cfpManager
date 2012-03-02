@@ -1,4 +1,4 @@
-CREATE TABLE `user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(255) DEFAULT NULL,
   `lastName` varchar(255) DEFAULT NULL,
@@ -12,5 +12,10 @@ CREATE TABLE `user` (
   `job_title` varchar(255) DEFAULT NULL,
   `bio` text,
   `country` varchar(255) DEFAULT NULL,
+  `provider` varchar(45) DEFAULT NULL,
+  `provider_id` varchar(45) DEFAULT NULL,
+  `display_name` varchar(200) DEFAULT NULL,
+  `photo_url` varchar(200) DEFAULT NULL,
+  `access_token` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -66,5 +66,46 @@ abstract class Application extends \PPI\Controller {
 	protected function getContentStorage() {
 		return new \App\Data\Content();
 	}
+
+	/**
+	 * Encrypts a text.
+	 *
+	 * @param $text The plain text
+	 * @return string The encrypted text.
+	 * @author Alfredo Juarez <alfrekjv@ppi.io>
+	 */
+	public function encrypt($text) {
+
+		$salt       = $this->getConfig()->auth->salt;
+		$iv         = $this->getConfig()->auth->iv;
+
+		$cipher     = mcrypt_module_open(MCRYPT_BLOWFISH,'','cbc','');
+		mcrypt_generic_init($cipher, $salt, $iv);
+		$encrypted  = mcrypt_generic($cipher, $text);
+		mcrypt_generic_deinit($cipher);
+
+		return $encrypted;
+	}
+
+	/**
+	 * Decrypts a Text.
+	 *
+	 * @param $text The Encrypted text
+	 * @return string Decrypted text
+	 * @author Alfredo Juarez <alfrekjv@ppi.io>
+	 */
+	public function decrypt($text) {
+
+		$salt       = $this->getConfig()->auth->salt;
+		$iv         = $this->getConfig()->auth->iv;
+
+		$cipher     = mcrypt_module_open(MCRYPT_BLOWFISH,'','cbc','');
+
+		mcrypt_generic_init($cipher, $salt, $iv);
+		$decrypted = mdecrypt_generic($cipher, $text);
+		mcrypt_generic_deinit($cipher);
+
+		return $decrypted;
+	}
 	
 }

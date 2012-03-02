@@ -231,7 +231,8 @@ class User extends Application {
 					'provider_id'       => $userProfile->identifier,
 					'provider'          => $provider,
 					'enabled'           => 1,
-					'password'          => ''
+					'password'          => '',
+					'access_token'      => $this->encrypt($userProfile->access_token)
 				);
 
 				$user_id = $user->insert($values);
@@ -248,16 +249,16 @@ class User extends Application {
 				'lastName'      => $userProfile->lastName,
 				'photo_url'     => $userProfile->photoURL,
 				'provider_id'   => $userProfile->identifier,
-				'provider'      => $provider
+				'provider'      => $provider,
+				'access_token'  => $this->encrypt($userProfile->access_token)
 			);
 
 			$user->update($values, array('id' => $user_id));
 
 			// aunthenticate user.
-			// What do we do when user is authenticated?
-			// do it here...
-
-			var_dump($userProfile);
+			$userStorage = $this->getUserStorage();
+			$this->setAuthData(new \App\Entity\AuthUser($userStorage->findByEmail($userProfile->email)));
+			$this->redirect('account');
 
 		} catch( Exception $e ) {
 			echo $e->getMessage();

@@ -153,7 +153,7 @@ class User extends \PPI\DataSource\ActiveQuery {
 
 		$row = $this->_conn->createQueryBuilder()
 			->select('id')
-			->from($this->_meta['table'])
+			->from($this->_meta['table'],'u')
 			->andWhere($where)
 			->execute()
 			->fetch($this->_meta['fetchmode']);
