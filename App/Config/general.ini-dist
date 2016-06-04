@@ -1,6 +1,7 @@
 [development]
 
 auth.salt = "jDbU&er*az"
+auth.iv = "12345678"
 
 email.fromEmail = "cfp@ppi.io"
 email.fromName = "CFP Mailer"
